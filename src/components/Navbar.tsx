@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-// ✅ FIXED: Added 'type' keyword before Variants
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
 
 const Navbar: React.FC = () => {
@@ -12,7 +11,7 @@ const Navbar: React.FC = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -28,14 +27,10 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <style>
-        {`@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap');`}
-      </style>
-
-      <nav className={`bg-[#ffffff]/90 backdrop-blur-xl border-b border-gray-200/80 shadow-sm sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-3'}`}>
+      <nav className={`bg-[#ffffff]/95 backdrop-blur-md border-b border-gray-200/80 shadow-sm sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-3'}`}>
         <div className="container mx-auto px-6 flex justify-between items-center">
           
-          {/* IDENTITY BLOCK (Unchanged) */}
+          {/* IDENTITY BLOCK */}
           <Link to="/" className="flex items-center gap-3 group cursor-pointer" aria-label="The Colonel's Academy Home">
             <div className="bg-[#0F1C15] text-white p-2 rounded-md shadow-lg group-hover:bg-[#D4AF37] group-hover:text-[#0F1C15] transition-colors duration-500">
               <i className="fas fa-shield-alt text-xl"></i>
@@ -50,7 +45,7 @@ const Navbar: React.FC = () => {
             </div>
           </Link>
           
-          {/* TACTICAL LINKS (Architecture: Command Wings, The Corps, Intelligence) */}
+          {/* TACTICAL LINKS */}
           <div className="hidden md:flex items-center space-x-8">
             
             {/* 1. COMMAND WINGS (Dropdown) */}
@@ -65,7 +60,6 @@ const Navbar: React.FC = () => {
                 </span>
                 <i className="fas fa-chevron-down text-[10px] text-gray-400 group-hover:text-[#D4AF37] transition-colors mb-0.5 ml-1"></i>
                 
-                {/* Original Bracket Effect */}
                 <span className="absolute -left-2 top-1/2 -translate-y-1/2 text-[#D4AF37] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 font-bold text-xl">[</span>
                 <span className="absolute -right-2 top-1/2 -translate-y-1/2 text-[#D4AF37] opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 font-bold text-xl">]</span>
               </button>
@@ -96,16 +90,16 @@ const Navbar: React.FC = () => {
               </motion.div>
             </div>
 
-            {/* 2. THE CORPS (Faculty) */}
+            {/* 2. OUR DIRECTING STAFF (Replaces The Corps) */}
             <Link to="/faculty" className="group relative px-2 py-1">
               <span className="font-['Rajdhani'] font-semibold text-lg text-gray-800 uppercase tracking-widest group-hover:text-[#0F1C15] transition-colors duration-300">
-                The Corps
+                Directing Staff
               </span>
               <span className="absolute -left-2 top-1/2 -translate-y-1/2 text-[#D4AF37] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 font-bold text-xl">[</span>
               <span className="absolute -right-2 top-1/2 -translate-y-1/2 text-[#D4AF37] opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 font-bold text-xl">]</span>
             </Link>
 
-            {/* 3. INTELLIGENCE (Resources) */}
+            {/* 3. INTELLIGENCE */}
             <Link to="/intel" className="group relative px-2 py-1">
               <span className="font-['Rajdhani'] font-semibold text-lg text-gray-800 uppercase tracking-widest group-hover:text-[#0F1C15] transition-colors duration-300">
                 Intelligence
@@ -115,7 +109,7 @@ const Navbar: React.FC = () => {
             </Link>
           </div>
 
-          {/* ACTIONS (HQ Login) */}
+          {/* ACTIONS */}
           <div className="flex items-center gap-4">
             <button className="hidden md:flex group relative overflow-hidden bg-transparent text-[#0F1C15] px-6 py-2 border border-[#0F1C15] hover:border-[#D4AF37] hover:text-[#0F1C15] hover:bg-[#D4AF37]/10 transition-all duration-300 items-center gap-2 rounded-sm font-['Rajdhani'] font-bold uppercase tracking-wider text-sm shadow-sm hover:shadow-md">
                 <i className="fas fa-lock text-lg group-hover:text-[#D4AF37] transition-colors"></i>
@@ -144,8 +138,6 @@ const Navbar: React.FC = () => {
               className="md:hidden bg-white border-t border-gray-100 overflow-hidden"
             >
               <div className="flex flex-col p-6 space-y-4 font-['Rajdhani'] font-bold text-gray-800 uppercase tracking-widest text-lg">
-                
-                {/* Mobile Wings */}
                 <div className="space-y-3 pb-4 border-b border-gray-100">
                   <span className="text-xs text-gray-400 tracking-[0.2em] block mb-1">Command Wings</span>
                   <Link to="/courses/army" className="flex items-center gap-3 hover:text-[#D4AF37]" onClick={() => setIsMenuOpen(false)}>
@@ -159,11 +151,13 @@ const Navbar: React.FC = () => {
                   </Link>
                 </div>
 
+                {/* Mobile: OUR DIRECTING STAFF (Replaces The Corps) */}
                 <Link to="/faculty" className="flex items-center gap-3 hover:text-[#D4AF37]" onClick={() => setIsMenuOpen(false)}>
-                  The Corps
+                  <i className="fas fa-user-tie text-sm text-gray-400"></i> Directing Staff
                 </Link>
+                
                 <Link to="/intel" className="flex items-center gap-3 hover:text-[#D4AF37]" onClick={() => setIsMenuOpen(false)}>
-                  Intelligence
+                  <i className="fas fa-broadcast-tower text-sm text-gray-400"></i> Intelligence
                 </Link>
                 
                 <button 

@@ -58,7 +58,13 @@ const PromoBanner: React.FC = () => {
   const pad = (num: number) => num.toString().padStart(2, '0');
 
   return (
-    <div className={`bg-[#FCD34D] text-[#0F1C15] w-full px-4 py-2 relative border-b border-[#b45309]/10 z-50 font-['Inter'] transition-all duration-300 ${isClosing ? 'opacity-0 -translate-y-full' : 'opacity-100 translate-y-0'}`}>
+    // ✅ OPTIMIZED: Removed 'transition-all', added 'will-change-transform'
+    <div className={`
+      bg-[#FCD34D] text-[#0F1C15] w-full px-4 py-2 relative 
+      border-b border-[#b45309]/10 z-50 font-['Inter'] 
+      transition-[transform,opacity] duration-300 ease-out will-change-transform
+      ${isClosing ? 'opacity-0 -translate-y-full' : 'opacity-100 translate-y-0'}
+    `}>
       <div className="container mx-auto flex flex-col lg:flex-row items-center justify-center gap-2 lg:gap-4 xl:gap-6">
         
         {/* 1. Timer */}

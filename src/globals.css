@@ -1,5 +1,5 @@
 /* src/globals.css */
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700;800&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+/* REMOVED @import to prevent render blocking - fonts are loaded in index.html */
 
 @tailwind base;
 @tailwind components;
@@ -24,39 +24,12 @@
   --color-secondary: #D4AF37;
   --color-accent: #DC2626;
   --color-background: #ffffff;
-  
-  /* DPI scaling */
-  --dpi-factor: min(1.2, 100vw / 1920);
-}
-
-/* High DPI displays (Retina, 4K, HiDPI) */
-@media (-webkit-min-device-pixel-ratio: 2), 
-       (min-resolution: 192dpi) {
-  :root {
-    font-size: 17px;
-  }
-  
-  /* Crisp image rendering */
-  img, svg, canvas {
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
-  }
-}
-
-/* Standard DPI displays */
-@media (-webkit-max-device-pixel-ratio: 1.5), 
-       (max-resolution: 143dpi) {
-  :root {
-    font-size: 16px;
-  }
 }
 
 /* HTML and Body */
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
-  -moz-text-size-adjust: 100%;
-  text-size-adjust: 100%;
   width: 100%;
   overflow-x: hidden;
 }
@@ -74,85 +47,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  font-feature-settings: "kern", "liga", "clig", "calt";
 }
 
 /* -------------------------------------------------------------------------- */
-/* 2. TYPOGRAPHY CONSISTENCY                                                 */
-/* -------------------------------------------------------------------------- */
-
-/* All text elements get consistent rendering */
-h1, h2, h3, h4, h5, h6, p, span, a, button, input, textarea, li, label {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-}
-
-/* Heading defaults */
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.025em;
-}
-
-/* Font helper classes */
-.font-display {
-  font-family: 'Oswald', system-ui, -apple-system, sans-serif;
-}
-
-.font-mono {
-  font-family: 'Rajdhani', monospace, system-ui;
-}
-
-/* -------------------------------------------------------------------------- */
-/* 3. LAYOUT SYSTEM                                                          */
-/* -------------------------------------------------------------------------- */
-
-/* Responsive container */
-.container-standard {
-  width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-@media (min-width: 640px) {
-  .container-standard {
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .container-standard {
-    padding-left: 4rem;
-    padding-right: 4rem;
-  }
-}
-
-/* Section spacing */
-.section-spacing {
-  padding-top: 4rem;
-  padding-bottom: 4rem;
-}
-
-@media (min-width: 768px) {
-  .section-spacing {
-    padding-top: 6rem;
-    padding-bottom: 6rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .section-spacing {
-    padding-top: 8rem;
-    padding-bottom: 8rem;
-  }
-}
-
-/* -------------------------------------------------------------------------- */
-/* 4. COMPONENT CLASSES                                                      */
+/* 2. COMPONENT CLASSES                                                      */
 /* -------------------------------------------------------------------------- */
 
 @layer components {
@@ -185,63 +83,15 @@ h1, h2, h3, h4, h5, h6 {
            flex items-center justify-center gap-2
            whitespace-nowrap;
   }
-
-  .btn-dark {
-    @apply bg-[#0F1C15] text-white
-           font-mono font-bold uppercase tracking-widest text-sm sm:text-base
-           px-5 sm:px-6 py-2.5 sm:py-3 rounded-lg
-           transition-all duration-300 ease-out
-           hover:bg-[#1a2e24] hover:scale-[1.02] hover:shadow-lg
-           active:scale-[0.98]
-           flex items-center justify-center gap-2
-           whitespace-nowrap;
-  }
-
-  /* Typography */
-  .heading-xl {
-    @apply font-display font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 
-           leading-[0.95] text-[#0F1C15] uppercase tracking-tight;
-  }
-
-  .heading-lg {
-    @apply font-display font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl 
-           leading-tight text-[#0F1C15] uppercase;
-  }
-  
-  .heading-md {
-    @apply font-display font-bold text-xl sm:text-2xl md:text-3xl 
-           leading-snug text-[#0F1C15] uppercase;
-  }
-
-  .text-lead {
-    @apply font-sans text-base sm:text-lg md:text-xl 
-           text-gray-600 font-light leading-relaxed;
-  }
-
-  /* Badges */
-  .badge-gold {
-    @apply inline-flex items-center gap-2 
-           bg-white border border-[#D4AF37]/30 
-           px-3 py-1 rounded-full
-           font-mono font-bold text-xs uppercase tracking-widest text-[#0F1C15];
-  }
-  
-  .badge-dark {
-    @apply inline-flex items-center gap-2 
-           bg-[#0F1C15] text-white
-           px-2 py-1 rounded
-           font-mono font-bold text-xs uppercase tracking-widest;
-  }
 }
 
 /* -------------------------------------------------------------------------- */
-/* 5. UTILITIES & ACCESSIBILITY                                              */
+/* 3. UTILITIES                                                              */
 /* -------------------------------------------------------------------------- */
 
-/* Scrollbar */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
-  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
@@ -258,41 +108,12 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--color-secondary);
 }
 
-/* Selection */
-::selection {
-  background-color: var(--color-secondary);
-  color: var(--color-primary);
-}
-
-/* Focus styles */
-:focus-visible {
-  outline: 2px solid var(--color-secondary);
-  outline-offset: 2px;
-}
-
-/* Smooth transitions */
-a, button, input, textarea {
-  transition: all 0.2s ease-in-out;
-}
-
-/* Button reset */
-button {
-  border: none;
-  background: none;
-  padding: 0;
-  cursor: pointer;
-}
-
 /* Image defaults */
 img {
   max-width: 100%;
   height: auto;
   display: block;
 }
-
-/* -------------------------------------------------------------------------- */
-/* 6. FONT LOADING FIXES                                                     */
-/* -------------------------------------------------------------------------- */
 
 /* Ensure fonts are loaded before showing content */
 .font-loading {
@@ -303,16 +124,11 @@ img {
   visibility: visible;
 }
 
-/* Add a class to body when fonts are loaded */
 body.fonts-loaded {
   animation: fadeIn 0.3s ease-in-out;
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

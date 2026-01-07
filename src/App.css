@@ -1,5 +1,4 @@
-/* RESET VITE DEFAULTS — REQUIRED FOR FULL-BLEED LAYOUT */
-
+/* src/App.css */
 #root {
   max-width: none;
   margin: 0;
@@ -7,79 +6,38 @@
   text-align: initial;
 }
 
-/* Optional: keep logo/demo styles if still used somewhere */
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
+/* --- ANIMATIONS --- */
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-/* ... existing styles ... */
-
-/* NEW: Marquee Animation for Status Tape */
-@keyframes marquee {
-  0% { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
-}
-
-.animate-marquee {
-  display: inline-block;
-  animation: marquee 20s linear infinite;
-}
-
-/* Hover to pause so officers can read the intel */
-.animate-marquee:hover {
-  animation-play-state: paused;
-}
-/* ... existing styles ... */
-
-/* INFINITE SCROLL ANIMATION */
+/* 1. Marquee / Infinite Scroll */
+/* Combined duplicate definitions into one */
 @keyframes marquee {
   0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); } /* We move exactly half the width (one full set of items) */
+  100% { transform: translateX(-50%); } 
 }
 
 .animate-marquee {
   display: flex;
-  width: max-content; /* Ensure the track is as wide as the content */
-  animation: marquee 40s linear infinite; /* Slow, smooth speed */
+  width: max-content;
+  animation: marquee 40s linear infinite;
+  will-change: transform; /* Hint to browser for GPU optimization */
 }
 
-/* Pause on hover for readability */
 .animate-marquee:hover {
   animation-play-state: paused;
 }
-/* ...existing css... */
 
+/* 2. Shine Effect */
+@keyframes shine {
+  100% {
+    left: 125%;
+  }
+}
+
+.animate-shine {
+  animation: shine 1s;
+}
+
+/* 3. Beam Effect */
 @keyframes beam {
   0% { left: -25%; opacity: 0; }
   50% { opacity: 1; }
@@ -90,13 +48,12 @@
   animation: beam 3s infinite linear;
 }
 
-/* ... existing styles ... */
-
-@keyframes scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-33.33%); } /* Moves 1/3rd (one full set) then resets instantly */
+/* 4. Pulse Slow */
+.animate-pulse-slow {
+  animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-.animate-scroll {
-  animation: scroll 40s linear infinite; /* Slow, smooth 40s loop */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .5; }
 }

@@ -10,6 +10,7 @@ import Home from './pages/Home';
 import ArmyPage from './pages/ArmyPage';
 import PolicePage from './pages/PolicePage';
 import APFPage from './pages/APFPage';
+import FacultyPage from './pages/FacultyPage';
 
 function App() {
   const location = useLocation();
@@ -29,6 +30,7 @@ function App() {
         <Route path="/courses/army" element={<ArmyPage />} />
         <Route path="/courses/police" element={<PolicePage />} />
         <Route path="/courses/apf" element={<APFPage />} />
+        <Route path="/faculty" element={<FacultyPage />} />
       </Routes>
 
     </div>
