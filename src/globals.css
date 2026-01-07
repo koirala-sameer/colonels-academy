@@ -1,0 +1,129 @@
+/* src/globals.css */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* -------------------------------------------------------------------------- */
+/* 1. RESET & BASE                               */
+/* -------------------------------------------------------------------------- */
+
+html {
+  scroll-behavior: smooth;
+  @apply antialiased;
+}
+
+body {
+  @apply bg-white text-[#0F1C15] overflow-x-hidden w-full m-0 p-0;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 2. DESIGN TOKENS (Variables)                               */
+/* -------------------------------------------------------------------------- */
+
+:root {
+  --color-army-dark: #0F1C15;      /* Deep Jungle Green */
+  --color-army-gold: #D4AF37;      /* Metallic Gold */
+  --color-army-gold-hover: #bfa145; /* Darker Gold for hover */
+  --color-alert-red: #DC2626;       /* Alert Red */
+}
+
+/* -------------------------------------------------------------------------- */
+/* 3. COMPONENT CLASSES (The System)                              */
+/* -------------------------------------------------------------------------- */
+
+@layer components {
+
+  /* --- LAYOUT --- */
+  /* Use this wrapper for every section content (Programs, Faculty, etc.) */
+  .section-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  /* Standard Padding for all sections */
+  .section-spacing {
+    @apply py-20 md:py-24;
+  }
+
+  /* --- BUTTONS (The "Zoo" Fix) --- */
+  
+  /* PRIMARY: Gold Solid (Join, Enroll, Buy) */
+  .btn-primary {
+    @apply bg-[#D4AF37] text-[#0F1C15] 
+           font-['Rajdhani'] font-bold uppercase tracking-widest text-lg
+           px-8 py-4 rounded-xl
+           transition-all duration-300 ease-out
+           hover:bg-[#FCD34D] hover:-translate-y-1 hover:shadow-lg
+           focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:ring-offset-2
+           flex items-center justify-center gap-3;
+  }
+
+  /* SECONDARY: Outline (Learn More, Watch Demo) */
+  .btn-secondary {
+    @apply bg-transparent border-2 border-[#D4AF37] text-[#0F1C15]
+           font-['Rajdhani'] font-bold uppercase tracking-widest text-lg
+           px-8 py-4 rounded-xl
+           transition-all duration-300 ease-out
+           hover:bg-[#D4AF37]/10
+           focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:ring-offset-2
+           flex items-center justify-center gap-3;
+  }
+
+  /* DARK VARIANT (For Light Backgrounds) */
+  .btn-dark {
+    @apply bg-[#0F1C15] text-white
+           font-['Rajdhani'] font-bold uppercase tracking-widest text-lg
+           px-8 py-4 rounded-xl
+           transition-all duration-300 ease-out
+           hover:bg-[#1a2e24] hover:shadow-xl hover:-translate-y-1
+           flex items-center justify-center gap-3;
+  }
+
+  /* --- TYPOGRAPHY --- */
+  
+  .heading-xl {
+    @apply font-['Oswald'] font-bold text-5xl md:text-7xl lg:text-8xl leading-[0.95] text-[#0F1C15] uppercase tracking-tight;
+  }
+
+  .heading-lg {
+    @apply font-['Oswald'] font-bold text-4xl md:text-5xl lg:text-6xl leading-tight text-[#0F1C15] uppercase;
+  }
+
+  .text-lead {
+    @apply font-['Inter'] text-lg md:text-xl text-gray-600 font-light leading-relaxed;
+  }
+
+  /* --- BADGES --- */
+  
+  .badge-gold {
+    @apply inline-flex items-center gap-2 
+           bg-white border border-[#D4AF37]/30 
+           px-4 py-1.5 rounded-full shadow-sm
+           font-['Rajdhani'] font-bold text-xs uppercase tracking-[0.2em] text-[#0F1C15];
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* 4. UTILITIES                                   */
+/* -------------------------------------------------------------------------- */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-army-dark);
+}
+::-webkit-scrollbar-thumb {
+  background: #2d4a36;
+  border-radius: 5px;
+  border: 2px solid var(--color-army-dark);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-army-gold);
+}
+
+::selection {
+  background-color: var(--color-army-gold);
+  color: var(--color-army-dark);
+}
