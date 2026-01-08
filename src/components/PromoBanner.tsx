@@ -58,14 +58,13 @@ const PromoBanner: React.FC = () => {
   const pad = (num: number) => num.toString().padStart(2, '0');
 
   return (
-    // ✅ OPTIMIZED: Removed 'transition-all', added 'will-change-transform'
     <div className={`
       bg-[#FCD34D] text-[#0F1C15] w-full px-4 py-2 relative 
       border-b border-[#b45309]/10 z-50 font-['Inter'] 
       transition-[transform,opacity] duration-300 ease-out will-change-transform
       ${isClosing ? 'opacity-0 -translate-y-full' : 'opacity-100 translate-y-0'}
     `}>
-      <div className="container mx-auto flex flex-col lg:flex-row items-center justify-center gap-2 lg:gap-4 xl:gap-6">
+      <div className="container mx-auto flex flex-col lg:flex-row items-center justify-center gap-2 lg:gap-4 xl:gap-6 text-center">
         
         {/* 1. Timer */}
         <div 
@@ -76,17 +75,17 @@ const PromoBanner: React.FC = () => {
           {pad(timeLeft.days)}d : {pad(timeLeft.hours)}h : {pad(timeLeft.minutes)}m : {pad(timeLeft.seconds)}s
         </div>
 
-        {/* 2. Offer Text */}
-        <div className="text-center lg:text-left flex flex-col sm:flex-row items-center gap-1 sm:gap-2">
-            <div className="text-xs sm:text-sm leading-tight">
+        {/* 2. Offer Text - Improved centering */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 text-center">
+            <div className="text-center">
                 <span className="font-['Oswald'] font-bold text-sm sm:text-base uppercase">EARLY BIRD:</span>
                 <span className="font-medium ml-1">Get <strong className="font-extrabold">50% OFF Pro.</strong></span>
             </div>
             
-            <div className="text-xs font-medium flex items-center gap-2">
+            <div className="flex items-center justify-center gap-2 text-xs font-medium">
                 <span>Code:</span>
                 <span 
-                  className="bg-white px-2 py-0.5 rounded border border-yellow-600/20 font-mono font-bold tracking-wide select-all cursor-pointer hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-[#0F1C15]"
+                  className="bg-white px-2 py-0.5 rounded border border-yellow-600/20 font-mono font-bold tracking-wide select-all cursor-pointer hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-[#0F1C15] text-center"
                   role="button"
                   tabIndex={0}
                   onClick={() => navigator.clipboard.writeText('CADET2026')}
