@@ -75,7 +75,7 @@ const PromoBanner: React.FC = () => {
           {pad(timeLeft.days)}d : {pad(timeLeft.hours)}h : {pad(timeLeft.minutes)}m : {pad(timeLeft.seconds)}s
         </div>
 
-        {/* 2. Offer Text - Improved centering */}
+        {/* 2. Offer Text */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 text-center">
             <div className="text-center">
                 <span className="font-['Oswald'] font-bold text-sm sm:text-base uppercase">EARLY BIRD:</span>
@@ -88,11 +88,11 @@ const PromoBanner: React.FC = () => {
                   className="bg-white px-2 py-0.5 rounded border border-yellow-600/20 font-mono font-bold tracking-wide select-all cursor-pointer hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-[#0F1C15] text-center"
                   role="button"
                   tabIndex={0}
-                  onClick={() => navigator.clipboard.writeText('CADET2026')}
-                  onKeyPress={(e) => e.key === 'Enter' && navigator.clipboard.writeText('CADET2026')}
-                  aria-label="Copy promotion code CADET2026 to clipboard"
+                  onClick={() => navigator.clipboard.writeText('OFFICER26')}
+                  onKeyPress={(e) => e.key === 'Enter' && navigator.clipboard.writeText('OFFICER26')}
+                  aria-label="Copy promotion code OFFICER26 to clipboard"
                 >
-                    CADET2026
+                    OFFICER26
                 </span>
             </div>
         </div>
