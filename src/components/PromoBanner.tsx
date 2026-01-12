@@ -1,121 +1,68 @@
 import React, { useState, useEffect } from 'react';
+import { Trophy, X } from 'lucide-react';
 
-const PromoBanner: React.FC = () => {
+interface PromoBannerProps {
+  badge?: string;
+  title?: string;
+  highlight?: string;
+}
+
+const PromoBanner: React.FC<PromoBannerProps> = ({ 
+  badge = "ACADEMIC EXCELLENCE", 
+  title = "Led by", 
+  highlight = "Former Chiefs & Toppers" 
+}) => {
   const [isVisible, setIsVisible] = useState(true);
-  const [isClosing, setIsClosing] = useState(false);
-  
-  // Initialize timer state
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0
-  });
-
-  // Check localStorage on component mount
-  useEffect(() => {
-    const bannerClosed = localStorage.getItem('promoBannerClosed');
-    if (bannerClosed === 'true') {
-      setIsVisible(false);
-    }
-  }, []);
+  const [timeLeft, setTimeLeft] = useState({ d: 0, h: 0, m: 0, s: 0 });
 
   useEffect(() => {
-    // Set deadline to 48 hours from now
-    const targetDate = new Date().getTime() + (48 * 60 * 60 * 1000) + (15 * 60 * 1000);
-
+    // 48 Hour Countdown Logic
+    const target = new Date().getTime() + (48 * 60 * 60 * 1000);
     const interval = setInterval(() => {
       const now = new Date().getTime();
-      const difference = targetDate - now;
-
-      if (difference > 0) {
-        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
-        setTimeLeft({ days, hours, minutes, seconds });
-      } else {
-        clearInterval(interval);
-        handleClose();
+      const diff = target - now;
+      if (diff > 0) {
+        setTimeLeft({
+          d: Math.floor(diff / (1000 * 60 * 60 * 24)),
+          h: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          m: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
+          s: Math.floor((diff % (1000 * 60)) / 1000),
+        });
       }
     }, 1000);
-
     return () => clearInterval(interval);
   }, []);
 
-  const handleClose = () => {
-    setIsClosing(true);
-    setTimeout(() => {
-      setIsVisible(false);
-      // Save to localStorage
-      localStorage.setItem('promoBannerClosed', 'true');
-    }, 300);
-  };
-
   if (!isVisible) return null;
 
-  const pad = (num: number) => num.toString().padStart(2, '0');
+  const pad = (n: number) => n.toString().padStart(2, '0');
 
   return (
-    <div className={`
-      bg-[#FCD34D] text-[#0F1C15] w-full px-4 py-2 relative 
-      border-b border-[#b45309]/10 z-50 font-['Inter'] 
-      transition-[transform,opacity] duration-300 ease-out will-change-transform
-      ${isClosing ? 'opacity-0 -translate-y-full' : 'opacity-100 translate-y-0'}
-    `}>
-      <div className="container mx-auto flex flex-col lg:flex-row items-center justify-center gap-2 lg:gap-4 xl:gap-6 text-center">
+    <div className="relative z-[110] bg-[#FCD34D] text-[#0F1C15] w-full px-4 py-2 border-b border-[#b45309]/10 font-sans shadow-sm">
+      <div className="container mx-auto flex flex-col lg:flex-row items-center justify-center gap-2 lg:gap-6 text-center">
         
-        {/* 1. Timer */}
-        <div 
-          className="bg-[#FFFBEB] text-[#0F1C15] px-3 py-1 rounded-md font-mono font-bold text-xs sm:text-sm md:text-base tracking-widest border border-yellow-500/30 shadow-sm whitespace-nowrap tabular-nums"
-          role="timer"
-          aria-label={`Promotion ends in ${pad(timeLeft.days)} days, ${pad(timeLeft.hours)} hours, ${pad(timeLeft.minutes)} minutes, ${pad(timeLeft.seconds)} seconds`}
-        >
-          {pad(timeLeft.days)}d : {pad(timeLeft.hours)}h : {pad(timeLeft.minutes)}m : {pad(timeLeft.seconds)}s
+        {/* Timer */}
+        <div className="bg-[#FFFBEB] text-[#0F1C15] px-3 py-1 rounded-md font-mono font-bold text-xs tracking-widest border border-yellow-500/30 shadow-sm">
+          {pad(timeLeft.d)}d : {pad(timeLeft.h)}h : {pad(timeLeft.m)}m : {pad(timeLeft.s)}s
         </div>
 
-        {/* 2. Offer Text */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 text-center">
-            <div className="text-center">
-                <span className="font-['Oswald'] font-bold text-sm sm:text-base uppercase">EARLY BIRD:</span>
-                <span className="font-medium ml-1">Get <strong className="font-extrabold">50% OFF Pro.</strong></span>
+        {/* Dynamic Text */}
+        <div className="flex items-center justify-center gap-3 text-sm">
+            <div className="flex items-center gap-2">
+                <Trophy className="w-4 h-4" />
+                <span className="font-bold uppercase tracking-wide">{badge}:</span>
             </div>
-            
-            <div className="flex items-center justify-center gap-2 text-xs font-medium">
-                <span>Code:</span>
-                <span 
-                  className="bg-white px-2 py-0.5 rounded border border-yellow-600/20 font-mono font-bold tracking-wide select-all cursor-pointer hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-[#0F1C15] text-center"
-                  role="button"
-                  tabIndex={0}
-                  onClick={() => navigator.clipboard.writeText('OFFICER26')}
-                  onKeyPress={(e) => e.key === 'Enter' && navigator.clipboard.writeText('OFFICER26')}
-                  aria-label="Copy promotion code OFFICER26 to clipboard"
-                >
-                    OFFICER26
-                </span>
-            </div>
+            <span>{title} <strong className="font-extrabold">{highlight}</strong></span>
         </div>
 
-        {/* 3. Button */}
+        {/* Close Button */}
         <button 
-          className="bg-[#0F1C15] text-white px-4 sm:px-5 py-1 sm:py-1.5 rounded-md font-bold text-xs uppercase tracking-wider hover:bg-[#1F3325] hover:shadow-md transition-all duration-200 whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:ring-offset-2"
-          aria-label="Join The Colonel's Academy with early bird discount"
+          onClick={() => setIsVisible(false)}
+          className="absolute right-2 top-1/2 -translate-y-1/2 p-1 hover:bg-black/5 rounded-full transition-colors"
         >
-          Join Today
+          <X className="w-4 h-4 opacity-60" />
         </button>
-
       </div>
-
-      {/* 4. Close Button */}
-      <button 
-        onClick={handleClose}
-        onKeyPress={(e) => e.key === 'Enter' && handleClose()}
-        className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 text-[#0F1C15]/60 hover:text-[#0F1C15] hover:bg-black/5 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[#0F1C15]"
-        aria-label="Close promotion banner"
-      >
-        <i className="fas fa-times text-sm" aria-hidden="true"></i>
-      </button>
     </div>
   );
 };

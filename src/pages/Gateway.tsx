@@ -1,11 +1,9 @@
-import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Shield, BookOpen, ChevronRight, Star, Download, Calendar, ChevronDown } from 'lucide-react';
 
 const Gateway = () => {
   const navigate = useNavigate();
-  // Removed hover state as animations are gone
 
   // TACTICAL TOPOGRAPHY PATTERN
   const topographyPattern = `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%239C92AC' fill-opacity='0.08' fill-rule='evenodd'/%3E%3C/svg%3E")`;
@@ -99,7 +97,7 @@ const Gateway = () => {
                   <span className="font-bold text-gray-900">APF</span> officers
                 </p>
 
-                {/* 4. TRUST */}
+                {/* 4. TRUST & SELECT (Left Aligned) */}
                 <div className="flex flex-col items-start gap-8">
                   <div className="flex items-center gap-2">
                     {[1, 2, 3, 4, 5].map((star) => (
@@ -113,7 +111,7 @@ const Gateway = () => {
               </motion.div>
             </div>
 
-            {/* --- POINTER (Only Hero Animation) --- */}
+            {/* --- TESLA-STYLE POINTER --- */}
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -132,9 +130,10 @@ const Gateway = () => {
           </div>
         </div>
 
-        {/* --- SERVICE CARDS (STATIC - NO ANIMATION) --- */}
+        {/* --- SERVICE CARDS (Static & Uniform) --- */}
         <div id="service-cards" className="relative z-10 mt-12 pb-24">
           
+          {/* CENTERED HEADER FOR CARDS */}
           <div className="text-center mb-16">
              <div className="inline-flex items-center justify-center gap-4 opacity-90">
                 <div className="h-px w-12 bg-gray-300"></div>
@@ -145,7 +144,7 @@ const Gateway = () => {
              </div>
           </div>
 
-          {/* Standard Div Grid - No Motion */}
+          {/* Cards Grid - No Animation */}
           <div className="grid md:grid-cols-3 gap-8 w-[96%] max-w-[2000px] mx-auto px-0">
             {services.map((service) => {
               return (
@@ -154,13 +153,14 @@ const Gateway = () => {
                   className="relative group cursor-pointer min-h-[650px] flex"
                   onClick={() => navigate(service.route)}
                 >
+                  <div className={`absolute -inset-0.5 bg-gradient-to-r ${service.color} rounded-[2.5rem] opacity-0 group-hover:opacity-30 blur-2xl transition duration-700`}></div>
                   <div className="relative w-full bg-white rounded-[2.5rem] border border-gray-100 shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col justify-end">
                     
                     {/* Background Visual */}
                     <div className="absolute inset-0 z-0">
                        <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] z-10 pointer-events-none"></div>
                        <div className="absolute inset-0 flex items-center justify-center">
-                          <img src={service.logoImage} alt="" className="w-[85%] h-[85%] object-contain opacity-10 grayscale" />
+                          <img src={service.logoImage} alt="" className="w-[85%] h-[85%] object-contain opacity-10 grayscale group-hover:opacity-20 transition-opacity duration-300" />
                        </div>
                        <div className="absolute inset-0 bg-gradient-to-t from-white via-white/80 to-transparent z-10"></div>
                     </div>
@@ -168,28 +168,33 @@ const Gateway = () => {
                     {/* Content */}
                     <div className="relative z-20 p-14 flex flex-col h-full justify-end">
                       
-                      {/* Top Badges */}
+                      {/* Top Badges (Logos) */}
                       <div className="absolute top-12 left-12 right-12 flex justify-between items-start">
-                         <div className="p-4 bg-[#F5F5F7] rounded-3xl border border-gray-200 group-hover:bg-white transition-colors duration-300">
-                            <Shield className={`w-12 h-12 text-gray-400 group-hover:${service.textAccent} transition-colors duration-300`} />
+                         <div className="w-16 h-16 bg-white rounded-2xl border border-gray-100 shadow-sm flex items-center justify-center p-2 group-hover:scale-105 transition-transform duration-300">
+                            <img src={service.logoImage} alt="logo" className="w-full h-full object-contain" />
                          </div>
+                         
                          <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-5 py-2.5 rounded-full border border-gray-100">
                             <Star className="w-5 h-5 fill-current text-[#D4AF37]" />
                             <span className="text-sm font-bold font-mono text-gray-600 tracking-wider">{service.stats}</span>
                          </div>
                       </div>
 
-                      {/* Text */}
+                      {/* Text with Uniform Height */}
                       <div className="mb-8">
-                        <h3 className="text-6xl lg:text-7xl font-display font-bold text-[#1F1F1F] mb-4 leading-[0.9]">
-                          {service.title}
-                        </h3>
-                        <p className="text-2xl font-bold text-gray-500 font-['Rajdhani'] uppercase tracking-[0.15em]">
-                          {service.subtitle}
-                        </p>
+                        <div className="min-h-[5rem] flex items-end">
+                          <h3 className="text-6xl font-display font-bold text-[#1F1F1F] leading-[0.9]">
+                            {service.title}
+                          </h3>
+                        </div>
+                        <div className="min-h-[2rem] mt-4">
+                          <p className="text-2xl font-bold text-gray-500 font-['Rajdhani'] uppercase tracking-[0.15em]">
+                            {service.subtitle}
+                          </p>
+                        </div>
                       </div>
 
-                      {/* Button (Always Visible - No Animation) */}
+                      {/* Button */}
                       <div className="pt-2">
                         <button
                           className={`w-full py-6 px-8 rounded-3xl ${service.solidColor} text-white font-bold font-mono tracking-widest uppercase flex items-center justify-center gap-4 shadow-xl hover:shadow-2xl transition-shadow duration-300`}
@@ -207,7 +212,7 @@ const Gateway = () => {
           </div>
         </div>
 
-        {/* --- NEXT BATCH INFO (FOOTER) --- */}
+        {/* --- NEXT BATCH INFO --- */}
         <div className="bg-gradient-to-r from-gray-900/5 via-white to-gray-500/5 mt-0 border-b border-gray-200">
           <div className="section-container py-24 text-center">
             <motion.div

@@ -1,17 +1,14 @@
-// src/pages/ArmyPage.tsx
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
 import { 
   Shield, Target, BookOpen, Calendar, Award, Users, 
-  Clock, CheckCircle, Star, ChevronRight, PlayCircle,
+  Clock, CheckCircle, ChevronRight, PlayCircle,
   FileText, BarChart, Globe, BookMarked
 } from 'lucide-react';
 import BundleWindow from '../components/BundleWindow';
 import MentorCard from '../components/MentorCard';
 
 const ArmyPage = () => {
-  const navigate = useNavigate();
   const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
   const [showBundle, setShowBundle] = useState(false);
 
@@ -85,7 +82,7 @@ const ArmyPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
       {/* Bundle Window Modal */}
-      {showBundle && <BundleWindow onClose={() => setShowBundle(false)} service="army" />}
+      {showBundle && <BundleWindow onClose={() => setShowBundle(false)} service="army" courses={courses} />}
 
       {/* Hero Section */}
       <div className="relative overflow-hidden bg-gradient-to-br from-army-900/5 via-white to-army-500/5">

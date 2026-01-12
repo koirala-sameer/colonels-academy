@@ -38,10 +38,6 @@ const Navbar: React.FC = () => {
     open: { opacity: 1, y: 0, display: 'block' }
   };
 
-  const toggleDropdown = (dropdown: string) => {
-    setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
-  };
-
   const staffCourses = [
     { name: 'Nepal Army Staff Course', path: '/courses/army', icon: 'fa-shield-alt' },
     { name: 'Nepal Police Staff Course', path: '/courses/police', icon: 'fa-balance-scale' },
@@ -60,14 +56,13 @@ const Navbar: React.FC = () => {
       <nav className={`bg-[#ffffff]/95 backdrop-blur-md border-b border-gray-200/80 shadow-sm sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-3'}`}>
         <div className="container mx-auto px-6 flex justify-between items-center">
           
-          {/* --- IDENTITY BLOCK (UPDATED: PERMANENT GOLD) --- */}
+          {/* --- IDENTITY BLOCK --- */}
           <Link 
             to={homeLink} 
             className="flex items-center gap-3 group cursor-pointer" 
             aria-label="The Colonel's Academy Home"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           >
-            {/* Box is now ALWAYS Gold (#D4AF37) with Dark Icon */}
             <div className="bg-[#D4AF37] text-[#0F1C15] p-2 rounded-md shadow-lg transition-transform duration-300 group-hover:scale-105">
               <i className="fas fa-shield-alt text-xl"></i>
             </div>
@@ -75,7 +70,6 @@ const Navbar: React.FC = () => {
               <h1 className="font-['Oswald'] font-bold text-xl text-[#0F1C15] tracking-tight uppercase">
                 The Colonel's Academy
               </h1>
-              {/* Subtext is now ALWAYS Gold/Accent color */}
               <p className="text-[10px] text-[#D4AF37] font-bold tracking-[0.3em] uppercase mt-1">
                 Staff College Wing
               </p>
