@@ -26,8 +26,7 @@ function App() {
   return (
     <div className="antialiased font-sans text-gray-900 min-h-screen w-full overflow-x-hidden flex flex-col bg-white">
       
-      {/* 1. HIDE PROMO BANNER ON GATEWAY */}
-      {!isGateway && <PromoBanner />}
+      {<PromoBanner />}
 
 <Navbar />
       
