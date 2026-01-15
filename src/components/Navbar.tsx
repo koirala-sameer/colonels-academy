@@ -52,6 +52,21 @@ const Navbar: React.FC = () => {
   };
 
   /* ---------------------------------- */
+  /* Logo Error Handler */
+  /* ---------------------------------- */
+  const handleNavbarLogoError = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    e.currentTarget.style.display = 'none';
+    const parent = e.currentTarget.parentElement;
+    if (parent) {
+      parent.innerHTML = `
+        <svg class="w-6 h-6 text-[#0F1C15]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        </svg>
+      `;
+    }
+  };
+
+  /* ---------------------------------- */
   /* Menu data */
   /* ---------------------------------- */
   const staffCourses = [
@@ -125,30 +140,37 @@ const Navbar: React.FC = () => {
   /* ---------------------------------- */
   return (
     <nav
-      className={`sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm transition-all ${
+      className={`sticky top-0 z-50 bg-gradient-to-r from-[#0F1C15]/90 to-[#152028]/90 backdrop-blur-xl border-b border-[#D4AF37]/40 shadow-2xl transition-all ${
         isScrolled ? 'py-2' : 'py-3'
       }`}
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
-        {/* Identity */}
+        {/* Identity - Matching Gateway Style */}
         <Link
           to={homeLink}
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="flex items-center gap-3 group"
+          className="flex items-center gap-4 group"
         >
-          <div className="bg-[#D4AF37] text-[#0F1C15] p-2 rounded-md shadow-lg group-hover:scale-105 transition-transform">
-            <i className="fas fa-shield-alt text-xl" />
+          {/* Academy Logo - Same as Gateway */}
+          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#D4AF37] to-[#F4CA30] flex items-center justify-center p-2 shadow-lg group-hover:scale-105 transition-transform">
+            <img
+              src="/images/academy-logo.png"
+              alt="The Colonel's Academy Logo"
+              className="w-full h-full object-contain"
+              onError={handleNavbarLogoError}
+            />
           </div>
-          <div>
-            <h1 className="font-['Oswald'] font-bold text-xl uppercase text-[#1F1F1F]">
-              The Colonel&apos;s Academy
-            </h1>
-            <p className="text-[10px] tracking-[0.3em] font-bold uppercase text-[#D4AF37]">
+          <div className="text-left">
+            <div className="font-['Rajdhani'] font-bold text-white text-lg uppercase tracking-wider">
+              The Colonel's Academy
+            </div>
+            <div className="font-mono text-xs text-[#D4AF37] uppercase tracking-wider mt-1">
               Staff College Wing
-            </p>
+            </div>
           </div>
         </Link>
-        {/* Desktop Nav */}
+        
+        {/* Desktop Nav - Updated text colors for dark background */}
         {!isGateway && (
           <div className="hidden md:flex items-center gap-8">
             <Dropdown
@@ -158,7 +180,7 @@ const Navbar: React.FC = () => {
               width="w-64"
             />
             <Link className="nav-link" to="/faculty">
-              <span className="font-['Rajdhani'] font-semibold text-lg uppercase tracking-widest">
+              <span className="font-['Rajdhani'] font-semibold text-lg uppercase tracking-widest text-white hover:text-[#D4AF37] transition-colors">
                 Directing Staff
               </span>
             </Link>
@@ -170,15 +192,16 @@ const Navbar: React.FC = () => {
             />
           </div>
         )}
-        {/* Actions */}
+        
+        {/* Actions - Updated for dark background */}
         <div className="flex items-center gap-4">
-          <button className="hidden md:flex items-center gap-2 px-6 py-2 border border-[#1F1F1F] uppercase font-bold tracking-wider text-sm hover:border-[#D4AF37] hover:bg-[#D4AF37]/10 transition">
+          <button className="hidden md:flex items-center gap-2 px-6 py-2 bg-[#D4AF37] text-[#0F1C15] uppercase font-bold tracking-wider text-sm hover:bg-[#C19A2E] transition-colors rounded-lg">
             <i className="fas fa-user-shield" />
             HQ Login
           </button>
           {!isGateway && (
             <button
-              className="md:hidden text-2xl hover:text-[#D4AF37]"
+              className="md:hidden text-2xl text-white hover:text-[#D4AF37]"
               onClick={() => setIsMenuOpen(v => !v)}
             >
               <i className={`fas ${isMenuOpen ? 'fa-times' : 'fa-bars'}`} />
@@ -186,7 +209,8 @@ const Navbar: React.FC = () => {
           )}
         </div>
       </div>
-      {/* Mobile Menu */}
+      
+      {/* Mobile Menu - Updated for dark background */}
       <AnimatePresence>
         {isMenuOpen && !isGateway && (
           <motion.div
@@ -194,12 +218,12 @@ const Navbar: React.FC = () => {
             initial="closed"
             animate="open"
             exit="closed"
-            className="md:hidden bg-white border-t"
+            className="md:hidden bg-gradient-to-r from-[#0F1C15]/90 to-[#152028]/90 border-t border-[#D4AF37]/40"
           >
             <div className="flex flex-col p-6 gap-4 uppercase font-bold tracking-widest">
-              <Link to="/courses/army">Staff Courses</Link>
-              <Link to="/faculty">Directing Staff</Link>
-              <button className="flex items-center gap-2 pt-4 border-t">
+              <Link to="/courses/army" className="text-white hover:text-[#D4AF37]">Staff Courses</Link>
+              <Link to="/faculty" className="text-white hover:text-[#D4AF37]">Directing Staff</Link>
+              <button className="flex items-center gap-2 pt-4 border-t border-[#D4AF37]/40 text-white hover:text-[#D4AF37]">
                 <i className="fas fa-user-shield" /> HQ Login
               </button>
             </div>

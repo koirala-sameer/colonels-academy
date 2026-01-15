@@ -29,10 +29,10 @@ function App() {
       {/* CHANGED: Hide PromoBanner on Gateway, show on all other pages */}
       {!isGateway && <PromoBanner />}
 
-            {!isGateway && <Navbar />}
+  
 
       
-      {/* <Navbar /> */}
+      <Navbar />
       
       <Routes>
         <Route path="/" element={<Gateway />} />
