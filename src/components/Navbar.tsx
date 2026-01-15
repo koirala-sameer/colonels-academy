@@ -106,7 +106,8 @@ const Navbar: React.FC = () => {
         aria-expanded={activeDropdown === id}
         className="group flex items-center gap-1 px-2 py-1 focus:outline-none"
       >
-        <span className="font-['Rajdhani'] font-semibold text-lg uppercase tracking-widest text-gray-800 group-hover:text-[#1F1F1F]">
+        {/* FIXED: Changed text-gray-800 to text-white so it shows on dark background */}
+        <span className="font-['Rajdhani'] font-semibold text-lg uppercase tracking-widest text-white group-hover:text-[#D4AF37] transition-colors">
           {label}
         </span>
         <i className="fas fa-chevron-down text-[10px] text-gray-400 group-hover:text-[#D4AF37] mb-0.5" />
