@@ -9,7 +9,8 @@ import {
   Clock,
   MapPin,
   CheckCircle,
-  ChevronRight
+  ChevronRight,
+  MousePointerClick
 } from 'lucide-react';
 import type { SVGProps } from 'react';
 
@@ -33,6 +34,7 @@ interface Wing {
 
 const Gateway = () => {
   const navigate = useNavigate();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [activeWing, setActiveWing] = useState<string | null>(null);
 
   const wings: Wing[] = [
@@ -101,11 +103,24 @@ const Gateway = () => {
           Staff College Preparation
         </h1>
 
-        <p className="mt-6 text-gray-600 max-w-2xl mx-auto">
-          Exclusive preparation tracks for Nepal Army, Police & APF officers.
-          <br />
-          <span className="text-sm">Each officer can only apply to their respective force's program.</span>
-        </p>
+        <div className="mt-6 max-w-2xl mx-auto flex flex-col items-center">
+          <p className="text-gray-600 mb-8">
+            Exclusive preparation tracks for Nepal Army, Police & APF officers.
+          </p>
+
+          {/* --- DESIGNED INSTRUCTION PILL --- */}
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-white rounded-full shadow-sm border border-gray-200 text-sm font-medium text-gray-700 hover:border-[#D4AF37]/50 hover:shadow-md transition-all cursor-default"
+          >
+            <MousePointerClick className="w-4 h-4 text-[#D4AF37]" />
+            <span>
+              Select your command <span className="text-gray-300 mx-1">|</span> Secure your seat to <span className="text-[#D4AF37] font-bold">Staff College</span>
+            </span>
+          </motion.div>
+        </div>
       </div>
 
       {/* CARDS */}
