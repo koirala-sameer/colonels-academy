@@ -1,256 +1,290 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { Shield, BookOpen, ChevronRight, Star, Download, Calendar, ChevronDown } from 'lucide-react';
+import { Shield, Target, Award, Star, Clock, Users, MapPin, ArrowRight } from 'lucide-react';
 
 const Gateway = () => {
   const navigate = useNavigate();
+  const [activeWing, setActiveWing] = useState<string | null>(null);
 
-  // TACTICAL TOPOGRAPHY PATTERN
-  const topographyPattern = `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%239C92AC' fill-opacity='0.08' fill-rule='evenodd'/%3E%3C/svg%3E")`;
-
-  const services = [
+  const wings = [
     {
-      id: 1,
-      title: "Nepal Army",
-      subtitle: "Staff College Preparation",
-      logoImage: "/images/armycard.jpg",
-      color: "from-army-700 to-army-500",
-      solidColor: "bg-[#4F772D]",
-      textAccent: "text-[#4F772D]",
-      stats: "98% Success Rate",
-      route: "/courses/army"
+      id: 'army',
+      title: 'NEPAL ARMY',
+      subtitle: 'ELITE STAFF COLLEGE PREP COURSE',
+      code: 'NA-SC',
+      logo: '/images/army-logo.png',
+      color: '#6B8E23',
+      icon: Shield,
+      stats: { success: '98.2%', seats: '24', duration: '12 Months', rank: 'Colonel & Above' },
+      gradient: 'linear-gradient(135deg, #D1E7DD 0%, #6B8E23 50%, #A3B18A 100%)',
+      pattern: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236B8E23' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+      path: '/courses/army'
     },
     {
-      id: 2,
-      title: "Nepal Police",
-      subtitle: "Staff College Program",
-      logoImage: "/images/policecard.jpg",
-      color: "from-blue-600 to-blue-400",
-      solidColor: "bg-[#0B57D0]",
-      textAccent: "text-[#0B57D0]",
-      stats: "95% Selection Rate",
-      route: "/courses/police"
+      id: 'police',
+      title: 'NEPAL POLICE',
+      subtitle: 'ELITE STAFF COLLEGE PREP COURSE',
+      code: 'NP-INS',
+      logo: '/images/police-logo.png',
+      color: '#3B82F6',
+      icon: Target,
+      stats: { success: '95.7%', seats: '28', duration: '10 Months', rank: 'DSP & Above' },
+      gradient: 'linear-gradient(135deg, #BFDBFE 0%, #3B82F6 50%, #60A5FA 100%)',
+      pattern: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%233B82F6' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+      path: '/courses/police'
     },
     {
-      id: 3,
-      title: "A.P.F.",
-      subtitle: "Staff College Course",
-      logoImage: "/images/apfcard.jpg",
-      color: "from-emerald-600 to-emerald-400",
-      solidColor: "bg-[#059669]",
-      textAccent: "text-[#059669]",
-      stats: "96% Success Rate",
-      route: "/courses/apf"
+      id: 'apf',
+      title: 'ARMED POLICE FORCE',
+      subtitle: 'ELITE STAFF COLLEGE PREP COURSE',
+      code: 'APF-EF',
+      logo: '/images/apf-logo.png',
+      color: '#EF4444',
+      icon: Award,
+      stats: { success: '96.5%', seats: '26', duration: '11 Months', rank: 'Commandant & Above' },
+      gradient: 'linear-gradient(135deg, #FEE2E2 0%, #EF4444 50%, #FCA5A5 100%)',
+      pattern: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23EF4444' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+      path: '/courses/apf'
     }
   ];
 
-  const scrollToCards = () => {
-    const cardsSection = document.getElementById('service-cards');
-    cardsSection?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 relative overflow-hidden font-sans">
-      
-      {/* --- BACKGROUND LAYER --- */}
-      <div 
-        className="absolute inset-0 z-0 opacity-40 pointer-events-none"
-        style={{ backgroundImage: topographyPattern }}
-      ></div>
-      <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] rounded-full bg-gradient-to-r from-gray-200 to-transparent blur-[120px] pointer-events-none opacity-60"></div>
-
+    <div className="relative min-h-screen w-full bg-gradient-to-b from-gray-50 via-white to-gray-100 overflow-hidden font-sans">
+      {/* Global Background Effects */}
+      <div className="absolute inset-0 z-0">
+        {/* Tactical Grid */}
+        <div
+          className="absolute inset-0 opacity-5"
+          style={{
+            backgroundImage: `linear-gradient(90deg, rgba(212, 175, 55, 0.1) 1px, transparent 1px),
+                              linear-gradient(0deg, rgba(212, 175, 55, 0.1) 1px, transparent 1px)`,
+            backgroundSize: '80px 80px',
+          }}
+        />
+        {/* Gradient Orbs */}
+        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-[#D4AF37]/10 to-transparent blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-gradient-to-l from-[#0F1C15]/20 to-transparent blur-3xl"></div>
+        {/* Subtle Topography Pattern */}
+        <div
+          className="absolute inset-0 opacity-10"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23D4AF37' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E")`
+          }}
+        />
+      </div>
+      {/* Main Content */}
       <div className="relative z-10">
-        
-        {/* --- HERO SECTION --- */}
-        <div className="relative overflow-hidden bg-gradient-to-br from-gray-900/5 via-white to-gray-500/5">
-          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=2070')] bg-cover bg-center opacity-10"></div>
-          
-          <div className="section-container relative pt-36 pb-28">
-            <div className="max-w-4xl text-left">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-              >
-                {/* 1. BADGE */}
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#D4AF37]/40 mb-8 shadow-sm">
-                  <Shield className="w-4 h-4 text-[#D4AF37]" />
-                  <span className="text-sm font-mono font-bold text-gray-800 tracking-wider uppercase">
-                    The Colonel's Academy
-                  </span>
-                </div>
-
-                {/* 2. TITLE */}
-                <h1 className="text-5xl md:text-7xl font-display font-bold tracking-tight mb-8 leading-[0.9]">
-                  <span className="block text-[#1F1F1F]">
-                    STAFF COLLEGE
-                  </span>
-                  <span className="block mt-2 text-[#D4AF37] tracking-widest">
-                    PREPARATION
-                  </span>
-                </h1>
-
-                {/* 3. DESCRIPTION */}
-                <p className="text-xl text-gray-600 mb-10 leading-relaxed max-w-2xl font-light">
-                  Exclusive programs for <span className="font-bold text-gray-900">Army</span>,{' '}
-                  <span className="font-bold text-gray-900">Police</span>, and{' '}
-                  <span className="font-bold text-gray-900">APF</span> officers
-                </p>
-
-                {/* 4. TRUST & SELECT (Left Aligned) */}
-                <div className="flex flex-col items-start gap-8">
-                  <div className="flex items-center gap-2">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <Star key={star} className="w-4 h-4 text-[#D4AF37] fill-current" />
-                    ))}
-                    <span className="text-sm text-gray-900 font-mono font-bold uppercase tracking-widest ml-3 border-b border-gray-200 pb-0.5">
-                      TRUSTED BY 500+ OFFICERS
-                    </span>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-
-            {/* --- TESLA-STYLE POINTER --- */}
+        {/* Hero Section - Minimal Branding */}
+        <div className="flex flex-col items-center justify-center px-6 pt-12 md:pt-20 pb-8">
+          <div className="max-w-5xl mx-auto text-center">
+            {/* Academy Branding with Logo */}
             <motion.div
-              initial={{ opacity: 0, y: -10 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1, duration: 0.8 }}
-              className="absolute bottom-10 left-1/2 -translate-x-1/2 cursor-pointer group"
-              onClick={scrollToCards}
+              transition={{ duration: 0.6 }}
+              className="inline-flex items-center gap-4 px-8 py-4 bg-gradient-to-r from-[#0F1C15]/90 to-[#152028]/90 backdrop-blur-xl rounded-2xl border-2 border-[#D4AF37]/40 mb-10 shadow-2xl"
             >
-               <motion.div
-                 animate={{ y: [0, 5, 0] }}
-                 transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-               >
-                 <ChevronDown className="w-5 h-5 text-[#D4AF37]/70 group-hover:text-[#D4AF37] transition-colors" />
-               </motion.div>
+              {/* Academy Logo */}
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#D4AF37] to-[#F4CA30] flex items-center justify-center p-2">
+                <img
+                  src="/images/academy-logo.png"
+                  alt="The Colonel's Academy Logo"
+                  className="w-full h-full object-contain"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                    const parent = e.currentTarget.parentElement;
+                    if (parent) {
+                      parent.innerHTML = `
+                        <svg class="w-6 h-6 text-[#0F1C15]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                      `;
+                    }
+                  }}
+                />
+              </div>
+              <div className="text-left">
+                <div className="font-['Rajdhani'] font-bold text-white text-lg uppercase tracking-wider">
+                  The Colonel's Academy
+                </div>
+                <div className="font-mono text-xs text-[#D4AF37] uppercase tracking-wider mt-1">
+                  Staff College Wing
+                </div>
+              </div>
             </motion.div>
-
+            {/* Main Title */}
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-8 leading-tight tracking-tight"
+            >
+              <span className="block bg-gradient-to-r from-gray-900 via-gray-900 to-[#D4AF37] bg-clip-text text-transparent">
+                ELITE STAFF COLLEGE
+              </span>
+              <span className="block text-[#D4AF37] mt-2">PREPARATION</span>
+            </motion.h1>
           </div>
         </div>
-
-        {/* --- SERVICE CARDS (Static & Uniform) --- */}
-        <div id="service-cards" className="relative z-10 mt-12 pb-24">
-          
-          {/* CENTERED HEADER FOR CARDS */}
-          <div className="text-center mb-16">
-             <div className="inline-flex items-center justify-center gap-4 opacity-90">
-                <div className="h-px w-12 bg-gray-300"></div>
-                <span className="text-xl font-['Rajdhani'] font-bold uppercase tracking-[0.25em] text-[#0F1C15]">
-                   SELECT YOUR COMMAND
-                </span>
-                <div className="h-px w-12 bg-gray-300"></div>
-             </div>
-          </div>
-
-          {/* Cards Grid - No Animation */}
-          <div className="grid md:grid-cols-3 gap-8 w-[96%] max-w-[2000px] mx-auto px-0">
-            {services.map((service) => {
+        {/* Service Wings Grid - Immediate & Prominent */}
+        <div className="relative px-4 md:px-8">
+          {/* Wings Container */}
+          <div className="grid md:grid-cols-3 gap-6 md:gap-8 max-w-7xl mx-auto">
+            {wings.map((wing) => {
+              const isActive = activeWing === wing.id;
               return (
-                <div
-                  key={service.id}
-                  className="relative group cursor-pointer min-h-[650px] flex"
-                  onClick={() => navigate(service.route)}
+                <motion.div
+                  key={wing.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  onMouseEnter={() => setActiveWing(wing.id)}
+                  onMouseLeave={() => setActiveWing(null)}
+                  onClick={() => navigate(wing.path)}
+                  className="relative group cursor-pointer"
                 >
-                  <div className={`absolute -inset-0.5 bg-gradient-to-r ${service.color} rounded-[2.5rem] opacity-0 group-hover:opacity-30 blur-2xl transition duration-700`}></div>
-                  <div className="relative w-full bg-white rounded-[2.5rem] border border-gray-100 shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col justify-end">
-                    
-                    {/* Background Visual */}
-                    <div className="absolute inset-0 z-0">
-                       <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] z-10 pointer-events-none"></div>
-                       <div className="absolute inset-0 flex items-center justify-center">
-                          <img src={service.logoImage} alt="" className="w-[85%] h-[85%] object-contain opacity-10 grayscale group-hover:opacity-20 transition-opacity duration-300" />
-                       </div>
-                       <div className="absolute inset-0 bg-gradient-to-t from-white via-white/80 to-transparent z-10"></div>
-                    </div>
-
+                  {/* Card Container */}
+                  <div className="relative bg-gradient-to-br from-white/95 to-gray-100/95 backdrop-blur-lg rounded-3xl border-2 border-gray-200/50 overflow-hidden transition-all duration-500 hover:border-gray-300 hover:shadow-2xl hover:shadow-gray-300/50 h-full">
+                    {/* Top Accent Bar */}
+                    <div
+                      className="h-2 w-full"
+                      style={{ backgroundColor: wing.color }}
+                    />
                     {/* Content */}
-                    <div className="relative z-20 p-14 flex flex-col h-full justify-end">
-                      
-                      {/* Top Badges (Logos) */}
-                      <div className="absolute top-12 left-12 right-12 flex justify-between items-start">
-                         <div className="w-16 h-16 bg-white rounded-2xl border border-gray-100 shadow-sm flex items-center justify-center p-2 group-hover:scale-105 transition-transform duration-300">
-                            <img src={service.logoImage} alt="logo" className="w-full h-full object-contain" />
-                         </div>
-                         
-                         <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-5 py-2.5 rounded-full border border-gray-100">
-                            <Star className="w-5 h-5 fill-current text-[#D4AF37]" />
-                            <span className="text-sm font-bold font-mono text-gray-600 tracking-wider">{service.stats}</span>
-                         </div>
-                      </div>
-
-                      {/* Text with Uniform Height */}
-                      <div className="mb-8">
-                        <div className="min-h-[5rem] flex items-end">
-                          <h3 className="text-6xl font-display font-bold text-[#1F1F1F] leading-[0.9]">
-                            {service.title}
-                          </h3>
-                        </div>
-                        <div className="min-h-[2rem] mt-4">
-                          <p className="text-2xl font-bold text-gray-500 font-['Rajdhani'] uppercase tracking-[0.15em]">
-                            {service.subtitle}
-                          </p>
+                    <div className="p-6 md:p-8 flex flex-col h-full">
+                      {/* Header */}
+                      <div className="flex items-center justify-between mb-6">
+                        <span className="font-mono text-xs font-bold tracking-widest text-gray-500 bg-gray-100 px-3 py-1.5 rounded-full">
+                          {wing.code}
+                        </span>
+                        {/* Status Indicator */}
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                          <span className="text-xs text-green-600 font-semibold">Active</span>
                         </div>
                       </div>
-
-                      {/* Button */}
-                      <div className="pt-2">
-                        <button
-                          className={`w-full py-6 px-8 rounded-3xl ${service.solidColor} text-white font-bold font-mono tracking-widest uppercase flex items-center justify-center gap-4 shadow-xl hover:shadow-2xl transition-shadow duration-300`}
+                      {/* Logo */}
+                      <div className="relative w-32 h-32 mx-auto mb-6">
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          {/* Glow Effect */}
+                          <motion.div
+                            className="absolute inset-0 rounded-full opacity-20 blur-xl"
+                            style={{ backgroundColor: wing.color }}
+                            animate={{
+                              scale: isActive ? 1.1 : 1,
+                              opacity: isActive ? 0.3 : 0.2
+                            }}
+                          />
+                          {/* Logo Image */}
+                          <div className="relative w-24 h-24 flex items-center justify-center">
+                            <div
+                              className="absolute inset-0 rounded-full opacity-20"
+                              style={{ backgroundColor: wing.color }}
+                            />
+                            <img
+                              src={wing.logo}
+                              alt={`${wing.title} Logo`}
+                              className="relative max-w-full max-h-full object-contain drop-shadow-2xl"
+                              onError={(e) => {
+                                e.currentTarget.style.display = 'none';
+                                const parent = e.currentTarget.parentElement;
+                                if (parent) {
+                                  parent.innerHTML = `
+                                    <div class="w-full h-full flex items-center justify-center">
+                                      <div class="relative">
+                                        <div class="absolute inset-0 rounded-full blur-xl" style="background-color: ${wing.color}; opacity: 0.3;"></div>
+                                        <div class="relative w-20 h-20 rounded-full flex items-center justify-center border-4 border-gray-200/50" style="background-color: ${wing.color}">
+                                          <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+${wing.id === 'army' ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />' :
+wing.id === 'police' ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />' :
+'<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />'}
+                                          </svg>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  `;
+                                }
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      {/* Title */}
+                      <h3 className="text-2xl md:text-3xl font-bold text-gray-900 text-center mb-2">
+                        {wing.title}
+                      </h3>
+                      {/* Subtitle */}
+                      <p className="text-gray-600 text-sm font-medium text-center mb-6 tracking-wide line-clamp-2">
+                        {wing.subtitle}
+                      </p>
+                      {/* Stats */}
+                      <div className="grid grid-cols-2 gap-3 mb-6">
+                        <div className="bg-gray-100 rounded-xl p-3">
+                          <div className="flex items-center gap-2 mb-1">
+                            <Star className="w-3 h-3 text-[#D4AF37]" />
+                            <span className="text-xs text-gray-500">Success</span>
+                          </div>
+                          <div className="text-lg font-bold text-gray-900">{wing.stats.success}</div>
+                        </div>
+                        <div className="bg-gray-100 rounded-xl p-3">
+                          <div className="flex items-center gap-2 mb-1">
+                            <Clock className="w-3 h-3 text-gray-500" />
+                            <span className="text-xs text-gray-500">Duration</span>
+                          </div>
+                          <div className="text-base font-bold text-gray-900">{wing.stats.duration}</div>
+                        </div>
+                        <div className="bg-gray-100 rounded-xl p-3">
+                          <div className="flex items-center gap-2 mb-1">
+                            <Users className="w-3 h-3 text-gray-500" />
+                            <span className="text-xs text-gray-500">Seats</span>
+                          </div>
+                          <div className="text-lg font-bold text-gray-900">{wing.stats.seats}</div>
+                        </div>
+                        <div className="bg-gray-100 rounded-xl p-3">
+                          <div className="flex items-center gap-2 mb-1">
+                            <MapPin className="w-3 h-3 text-gray-500" />
+                            <span className="text-xs text-gray-500">Rank</span>
+                          </div>
+                          <div className="text-sm font-bold text-gray-900">{wing.stats.rank}</div>
+                        </div>
+                      </div>
+                      {/* CTA Button */}
+                      <div className="mt-auto">
+                        <motion.button
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          className="w-full py-3 rounded-xl text-white font-bold tracking-wider flex items-center justify-center gap-3 transition-all duration-300 group/btn"
+                          style={{ background: wing.gradient }}
                         >
-                          <span className="text-xl">Access Portal</span>
-                          <ChevronRight className="w-8 h-8" />
-                        </button>
+                          <span>Access Program</span>
+                          <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                        </motion.button>
+                        {/* Enrollment Info */}
+                        <div className="mt-3 text-center">
+                          <span className="text-xs text-gray-500">
+                            Next intake: <span className="font-bold text-gray-700">Feb 1, 2024</span>
+                          </span>
+                        </div>
                       </div>
-
                     </div>
                   </div>
-                </div>
+                  {/* Hover Glow Effect */}
+                  {isActive && (
+                    <motion.div
+                      className="absolute inset-0 rounded-3xl pointer-events-none"
+                      style={{
+                        background: `radial-gradient(circle at center, ${wing.color}20 0%, transparent 70%)`
+                      }}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                    />
+                  )}
+                </motion.div>
               );
             })}
           </div>
         </div>
-
-        {/* --- NEXT BATCH INFO --- */}
-        <div className="bg-gradient-to-r from-gray-900/5 via-white to-gray-500/5 mt-0 border-b border-gray-200">
-          <div className="section-container py-24 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="max-w-3xl mx-auto"
-            >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#D4AF37]/50 shadow-sm mb-6">
-                <BookOpen className="w-4 h-4 text-[#D4AF37]" />
-                <span className="text-sm font-['Rajdhani'] font-bold text-[#1F1F1F] tracking-widest uppercase">
-                  NEXT BATCH STARTS FEB 1, 2024
-                </span>
-              </div>
-
-              <h3 className="text-3xl md:text-4xl font-display font-bold text-[#1F1F1F] mb-4">
-                Limited Seats Available
-              </h3>
-
-              <p className="text-lg text-gray-500 mb-10 leading-relaxed">
-                Each service program has limited capacity to ensure personalized attention and mentorship.
-                Early enrollment recommended.
-              </p>
-
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <button className="w-full sm:w-auto px-8 py-3 rounded-xl border-2 border-[#1F1F1F] text-[#1F1F1F] font-mono font-bold uppercase tracking-wider hover:bg-[#1F1F1F] hover:text-white transition-all duration-300 flex items-center justify-center gap-2">
-                  <Download className="w-5 h-5" />
-                  Download Brochure
-                </button>
-                <button className="w-full sm:w-auto px-8 py-3 rounded-xl bg-[#D4AF37] text-[#0F1C15] font-mono font-bold uppercase tracking-wider hover:bg-[#bfa14f] transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
-                  <Calendar className="w-5 h-5" />
-                  View Program Schedule
-                </button>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-
       </div>
     </div>
   );

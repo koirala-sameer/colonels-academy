@@ -15,6 +15,9 @@ import FacultyPage from './pages/FacultyPage';
 function App() {
   const location = useLocation();
   
+  // Check if we are on the Gateway (Home) page
+  const isGateway = location.pathname === '/';
+
   // Scroll to top whenever route changes
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -23,8 +26,13 @@ function App() {
   return (
     <div className="antialiased font-sans text-gray-900 min-h-screen w-full overflow-x-hidden flex flex-col bg-white">
       
-      <PromoBanner />
-      <Navbar />
+      {/* CHANGED: Hide PromoBanner on Gateway, show on all other pages */}
+      {!isGateway && <PromoBanner />}
+
+            {!isGateway && <Navbar />}
+
+      
+      {/* <Navbar /> */}
       
       <Routes>
         <Route path="/" element={<Gateway />} />
