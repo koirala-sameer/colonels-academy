@@ -7,10 +7,11 @@ import {
   Award,
   Star,
   Clock,
-  Users,
   MapPin,
-  ArrowRight
+  CheckCircle,
+  ChevronRight
 } from 'lucide-react';
+import type { SVGProps } from 'react';
 
 interface Wing {
   id: string;
@@ -19,15 +20,14 @@ interface Wing {
   code: string;
   logo: string;
   color: string;
-  icon: React.ComponentType<{ className?: string }>;
+  lightColor: string;
+  icon: React.ComponentType<SVGProps<SVGSVGElement>>;
   stats: {
     success: string;
     seats: string;
     duration: string;
     rank: string;
   };
-  gradient: string;
-  pattern: string;
   path: string;
 }
 
@@ -38,196 +38,223 @@ const Gateway = () => {
   const wings: Wing[] = [
     {
       id: 'army',
-      title: 'NEPAL ARMY',
-      subtitle: 'ELITE STAFF COLLEGE PREP COURSE',
+      title: 'Nepal Army',
+      subtitle: 'Staff College Preparation Program',
       code: 'NA-SC',
       logo: '/images/army-logo.png',
-      color: '#4F772D',
+      color: '#00693E',
+      lightColor: '#E6F2ED',
       icon: Shield,
-      stats: { success: '98.2%', seats: '24', duration: '12 Months', rank: 'Colonel & Above' },
-      gradient: '',
-      pattern: '',
+      stats: { 
+        success: '98.2%', 
+        seats: '24', 
+        duration: '12 Months', 
+        rank: 'Colonel & Above' 
+      },
       path: '/courses/army'
     },
     {
       id: 'police',
-      title: 'NEPAL POLICE',
-      subtitle: 'ELITE STAFF COLLEGE PREP COURSE',
+      title: 'Nepal Police',
+      subtitle: 'Senior Command Staff Preparation',
       code: 'NP-INS',
       logo: '/images/police-logo.png',
-      color: '#0B57D0',
+      color: '#1E3A8A',
+      lightColor: '#E8EDFF',
       icon: Target,
-      stats: { success: '95.7%', seats: '28', duration: '10 Months', rank: 'DSP & Above' },
-      gradient: '',
-      pattern: '',
+      stats: { 
+        success: '95.7%', 
+        seats: '28', 
+        duration: '10 Months', 
+        rank: 'DSP & Above' 
+      },
       path: '/courses/police'
     },
     {
       id: 'apf',
-      title: 'ARMED POLICE FORCE',
-      subtitle: 'ELITE STAFF COLLEGE PREP COURSE',
+      title: 'Armed Police Force',
+      subtitle: 'Elite Staff College Track',
       code: 'APF-EF',
       logo: '/images/apf-logo.png',
-      color: '#DC2626',
+      color: '#991B1B',
+      lightColor: '#FEE2E2',
       icon: Award,
-      stats: { success: '96.5%', seats: '26', duration: '11 Months', rank: 'Commandant & Above' },
-      gradient: '',
-      pattern: '',
+      stats: { 
+        success: '96.5%', 
+        seats: '26', 
+        duration: '11 Months', 
+        rank: 'Commandant & Above' 
+      },
       path: '/courses/apf'
     }
   ];
 
   return (
-    <div className="relative min-h-screen w-full bg-gradient-to-b from-gray-50 via-white to-gray-100 overflow-hidden font-sans">
-      {/* Background Grid */}
-      <div
-        className="absolute inset-0 opacity-5"
-        style={{
-          backgroundImage: `
-            linear-gradient(90deg, rgba(212,175,55,0.1) 1px, transparent 1px),
-            linear-gradient(0deg, rgba(212,175,55,0.1) 1px, transparent 1px)
-          `,
-          backgroundSize: '80px 80px'
-        }}
-      />
-
-      <div className="relative z-10">
-        {/* HERO */}
-        <div className="flex flex-col items-center justify-center px-6 pt-24 pb-12 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="max-w-5xl"
-          >
-            {/* ELITE (Top) */}
-            <div className="text-sm md:text-base font-bold tracking-[0.6em] text-[#D4AF37] mb-4">
-              ELITE
-            </div>
-
-            {/* STAFF COLLEGE */}
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-gray-900 leading-[1.05]">
-              STAFF COLLEGE
-            </h1>
-
-            {/* PREPARATION */}
-            <div className="mt-2 text-2xl md:text-3xl lg:text-4xl font-bold tracking-[0.3em] text-[#D4AF37]">
-              PREPARATION
-            </div>
-
-            {/* Audience */}
-            <p className="mt-8 text-lg text-gray-600 border-t pt-6 max-w-2xl mx-auto">
-              Exclusively for <b>Nepal Army</b>, <b>Nepal Police</b> & <b>APF Officers</b>
-            </p>
-          </motion.div>
+    <div className="min-h-screen bg-[#f6f7f8] font-sans">
+      {/* HERO */}
+      <div className="text-center pt-24 pb-16 px-6">
+        <div className="text-xs tracking-[0.5em] font-semibold text-gray-500 mb-4">
+          ELITE OFFICER PROGRAMS
         </div>
 
-        {/* CARDS */}
-        <div className="px-4 md:px-8 pb-20">
-          <div className="grid md:grid-cols-3 gap-6 max-w-7xl mx-auto">
-            {wings.map((wing) => {
-              const isActive = activeWing === wing.id;
+        <h1 className="text-4xl md:text-6xl font-bold text-gray-900">
+          Staff College Preparation
+        </h1>
 
-              return (
-                <motion.div
-                  key={wing.id}
-                  onMouseEnter={() => setActiveWing(wing.id)}
-                  onMouseLeave={() => setActiveWing(null)}
-                  onClick={() => navigate(wing.path)}
-                  className="relative cursor-pointer"
-                >
-                  <div className="bg-white rounded-xl border border-gray-200 hover:shadow-xl transition-all h-full">
-                    <div className="h-1" style={{ backgroundColor: wing.color }} />
-                    <div className="p-6 flex flex-col h-full">
-                      <div className="flex justify-between mb-6">
-                        <span className="font-mono text-xs tracking-widest bg-gray-50 px-3 py-1.5 rounded-full">
-                          {wing.code}
-                        </span>
-                        <span className="text-xs text-green-600 font-semibold flex items-center gap-2">
-                          <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                          Active
-                        </span>
+        <p className="mt-6 text-gray-600 max-w-2xl mx-auto">
+          Exclusive preparation tracks for Nepal Army, Police & APF officers.
+          <br />
+          <span className="text-sm">Each officer can only apply to their respective force's program.</span>
+        </p>
+      </div>
+
+      {/* CARDS */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+        <div className="grid md:grid-cols-3 gap-8">
+          {wings.map((wing) => {
+            const Icon = wing.icon;
+            
+            return (
+              <motion.div
+                key={wing.id}
+                onMouseEnter={() => setActiveWing(wing.id)}
+                onMouseLeave={() => setActiveWing(null)}
+                onClick={() => navigate(wing.path)}
+                whileHover={{ y: -8 }}
+                transition={{ duration: 0.25 }}
+                className="cursor-pointer group"
+              >
+                <div className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow h-full flex flex-col border border-gray-100">
+                  
+                  {/* TOP SECTION */}
+                  <div className="p-8 pb-6">
+                    <div className="flex justify-between items-start mb-6">
+                      <div>
+                        <div className="text-xs font-medium text-gray-500 mb-1">{wing.code}</div>
+                        <h3 className="text-2xl font-semibold text-gray-900">
+                          {wing.title}
+                        </h3>
                       </div>
-
-                      <div className="relative w-28 h-28 mx-auto mb-6">
-                        <div
-                          className="absolute inset-0 rounded-full blur-xl opacity-20"
-                          style={{ backgroundColor: wing.color }}
-                        />
-                        <img
-                          src={wing.logo}
-                          alt={wing.title}
-                          className="relative w-full h-full object-contain"
-                        />
-                      </div>
-
-                      <h3 className="text-2xl font-bold text-center mb-2">
-                        {wing.title}
-                      </h3>
-
-                      <p className="text-sm text-gray-600 text-center mb-6">
-                        {wing.subtitle}
-                      </p>
-
-                      <div className="grid grid-cols-2 gap-3 mb-6">
-                        <Stat icon={Star} label="Success" value={wing.stats.success} />
-                        <Stat icon={Clock} label="Duration" value={wing.stats.duration} />
-                        <Stat icon={Users} label="Seats" value={wing.stats.seats} />
-                        <Stat icon={MapPin} label="Rank" value={wing.stats.rank} />
-                      </div>
-
-                      <motion.button
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        className="mt-auto w-full py-3 rounded-xl text-white font-bold tracking-wider flex items-center justify-center gap-3"
-                        style={{ backgroundColor: wing.color }}
+                      <div 
+                        className="w-12 h-12 rounded-xl flex items-center justify-center"
+                        style={{ backgroundColor: wing.lightColor }}
                       >
-                        Access Program
-                        <ArrowRight className="w-4 h-4" />
-                      </motion.button>
+                        <Icon 
+                          className="w-6 h-6" 
+                          style={{ color: wing.color }}
+                        />
+                      </div>
+                    </div>
 
-                      <div className="mt-3 text-center text-xs text-gray-500">
-                        Next intake: <b>Feb 1, 2024</b>
+                    <p className="text-sm text-gray-600 mb-6">
+                      {wing.subtitle}
+                    </p>
+
+                    {/* ENROLLMENT STATUS */}
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4 text-green-500" />
+                        <span className="text-sm font-medium text-green-600">Enrolling Now</span>
+                      </div>
+                      <div className="text-sm text-gray-500">
+                        Seats: <span className="font-semibold text-gray-900">{wing.stats.seats}</span>
                       </div>
                     </div>
                   </div>
 
-                  {isActive && (
-                    <motion.div
-                      className="absolute inset-0 rounded-xl pointer-events-none"
+                  {/* LOGO SECTION - FIXED SIZE */}
+                  <div 
+                    className="relative h-64 flex items-center justify-center p-4"
+                    style={{ backgroundColor: wing.lightColor }}
+                  >
+                    {/* Background pattern */}
+                    <div 
+                      className="absolute inset-0 opacity-5"
                       style={{
-                        background: `radial-gradient(circle, ${wing.color}20 0%, transparent 70%)`
+                        backgroundImage: `radial-gradient(${wing.color} 1px, transparent 1px)`,
+                        backgroundSize: '20px 20px'
                       }}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
                     />
-                  )}
-                </motion.div>
-              );
-            })}
-          </div>
+                    
+                    {/* Logo container with consistent size */}
+                    <div className="relative w-full h-full max-w-[200px] mx-auto flex items-center justify-center">
+                      <motion.div
+                        className="relative w-full h-full flex items-center justify-center"
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <img
+                          src={wing.logo}
+                          alt={wing.title}
+                          className="w-auto h-auto max-h-full max-w-full object-contain"
+                        />
+                      </motion.div>
+                    </div>
+                  </div>
+
+                  {/* STATS SECTION */}
+                  <div className="p-8 pt-6">
+                    <div className="grid grid-cols-2 gap-4 mb-8">
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                          <Star className="w-4 h-4 text-gray-400" />
+                          <span className="text-xs font-medium text-gray-500">Success Rate</span>
+                        </div>
+                        <div className="text-lg font-bold text-gray-900">{wing.stats.success}</div>
+                      </div>
+                      
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                          <Clock className="w-4 h-4 text-gray-400" />
+                          <span className="text-xs font-medium text-gray-500">Duration</span>
+                        </div>
+                        <div className="text-lg font-bold text-gray-900">{wing.stats.duration}</div>
+                      </div>
+                      
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                          <MapPin className="w-4 h-4 text-gray-400" />
+                          <span className="text-xs font-medium text-gray-500">Rank</span>
+                        </div>
+                        <div className="text-sm font-semibold text-gray-900">{wing.stats.rank}</div>
+                      </div>
+                      
+                      <div className="space-y-1">
+                        <div className="text-xs font-medium text-gray-500">Next Intake</div>
+                        <div className="text-sm font-semibold text-gray-900">Feb 1, 2024</div>
+                      </div>
+                    </div>
+
+                    {/* CTA BUTTON */}
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="w-full py-3.5 px-4 rounded-xl font-medium text-white flex items-center justify-center gap-2 group-hover:shadow-md transition-all duration-300"
+                      style={{ backgroundColor: wing.color }}
+                    >
+                      View Program Details
+                      <ChevronRight className="w-4 h-4" />
+                    </motion.button>
+                  </div>
+                </div>
+
+                {/* COLOR ACCENT BORDER ON HOVER */}
+                <div 
+                  className="absolute inset-0 rounded-3xl border-2 border-transparent group-hover:border-opacity-30 transition-all duration-300 pointer-events-none"
+                  style={{
+                    borderColor: wing.color,
+                    opacity: activeWing === wing.id ? 1 : 0
+                  }}
+                />
+              </motion.div>
+            );
+          })}
         </div>
+
+     
       </div>
     </div>
   );
 };
-
-const Stat = ({
-  icon: Icon,
-  label,
-  value
-}: {
-  icon: React.ComponentType<{ className?: string }>;
-  label: string;
-  value: string;
-}) => (
-  <div className="bg-gray-50 rounded-xl p-3">
-    <div className="flex items-center gap-2 mb-1">
-      <Icon className="w-3 h-3 text-gray-500" />
-      <span className="text-xs text-gray-500">{label}</span>
-    </div>
-    <div className="text-sm font-bold">{value}</div>
-  </div>
-);
 
 export default Gateway;
