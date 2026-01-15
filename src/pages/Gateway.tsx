@@ -14,11 +14,11 @@ const Gateway = () => {
       subtitle: 'ELITE STAFF COLLEGE PREP COURSE',
       code: 'NA-SC',
       logo: '/images/army-logo.png',
-      color: '#6B8E23',
+      color: '#4F772D',
       icon: Shield,
       stats: { success: '98.2%', seats: '24', duration: '12 Months', rank: 'Colonel & Above' },
-      gradient: 'linear-gradient(135deg, #D1E7DD 0%, #6B8E23 50%, #A3B18A 100%)',
-      pattern: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236B8E23' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+      gradient: 'linear-gradient(135deg, #2C3E1F 0%, #4F772D 50%, #6B8C47 100%)',
+      pattern: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234F772D' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
       path: '/courses/army'
     },
     {
@@ -27,11 +27,11 @@ const Gateway = () => {
       subtitle: 'ELITE STAFF COLLEGE PREP COURSE',
       code: 'NP-INS',
       logo: '/images/police-logo.png',
-      color: '#3B82F6',
+      color: '#0B57D0',
       icon: Target,
       stats: { success: '95.7%', seats: '28', duration: '10 Months', rank: 'DSP & Above' },
-      gradient: 'linear-gradient(135deg, #BFDBFE 0%, #3B82F6 50%, #60A5FA 100%)',
-      pattern: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%233B82F6' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+      gradient: 'linear-gradient(135deg, #0A3E9E 0%, #0B57D0 50%, #3B82F6 100%)',
+      pattern: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230B57D0' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
       path: '/courses/police'
     },
     {
@@ -40,11 +40,11 @@ const Gateway = () => {
       subtitle: 'ELITE STAFF COLLEGE PREP COURSE',
       code: 'APF-EF',
       logo: '/images/apf-logo.png',
-      color: '#EF4444',
+      color: '#DC2626',
       icon: Award,
       stats: { success: '96.5%', seats: '26', duration: '11 Months', rank: 'Commandant & Above' },
-      gradient: 'linear-gradient(135deg, #FEE2E2 0%, #EF4444 50%, #FCA5A5 100%)',
-      pattern: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23EF4444' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+      gradient: 'linear-gradient(135deg, #991B1B 0%, #DC2626 50%, #EF4444 100%)',
+      pattern: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23DC2626' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
       path: '/courses/apf'
     }
   ];
@@ -145,17 +145,17 @@ const Gateway = () => {
                   className="relative group cursor-pointer"
                 >
                   {/* Card Container */}
-                  <div className="relative bg-gradient-to-br from-white/95 to-gray-100/95 backdrop-blur-lg rounded-3xl border-2 border-gray-200/50 overflow-hidden transition-all duration-500 hover:border-gray-300 hover:shadow-2xl hover:shadow-gray-300/50 h-full">
+                  <div className="relative bg-white rounded-xl border border-gray-200 overflow-hidden transition-all duration-500 hover:border-gray-300 hover:shadow-xl h-full">
                     {/* Top Accent Bar */}
                     <div
-                      className="h-2 w-full"
+                      className="h-1 w-full"
                       style={{ backgroundColor: wing.color }}
                     />
                     {/* Content */}
-                    <div className="p-6 md:p-8 flex flex-col h-full">
+                    <div className="p-6 flex flex-col h-full">
                       {/* Header */}
                       <div className="flex items-center justify-between mb-6">
-                        <span className="font-mono text-xs font-bold tracking-widest text-gray-500 bg-gray-100 px-3 py-1.5 rounded-full">
+                        <span className="font-mono text-xs font-bold tracking-widest text-gray-500 bg-gray-50 px-3 py-1.5 rounded-full">
                           {wing.code}
                         </span>
                         {/* Status Indicator */}
@@ -220,28 +220,28 @@ wing.id === 'police' ? '<path stroke-linecap="round" stroke-linejoin="round" str
                       </p>
                       {/* Stats */}
                       <div className="grid grid-cols-2 gap-3 mb-6">
-                        <div className="bg-gray-100 rounded-xl p-3">
+                        <div className="bg-gray-50 rounded-xl p-3">
                           <div className="flex items-center gap-2 mb-1">
                             <Star className="w-3 h-3 text-[#D4AF37]" />
                             <span className="text-xs text-gray-500">Success</span>
                           </div>
                           <div className="text-lg font-bold text-gray-900">{wing.stats.success}</div>
                         </div>
-                        <div className="bg-gray-100 rounded-xl p-3">
+                        <div className="bg-gray-50 rounded-xl p-3">
                           <div className="flex items-center gap-2 mb-1">
                             <Clock className="w-3 h-3 text-gray-500" />
                             <span className="text-xs text-gray-500">Duration</span>
                           </div>
                           <div className="text-base font-bold text-gray-900">{wing.stats.duration}</div>
                         </div>
-                        <div className="bg-gray-100 rounded-xl p-3">
+                        <div className="bg-gray-50 rounded-xl p-3">
                           <div className="flex items-center gap-2 mb-1">
                             <Users className="w-3 h-3 text-gray-500" />
                             <span className="text-xs text-gray-500">Seats</span>
                           </div>
                           <div className="text-lg font-bold text-gray-900">{wing.stats.seats}</div>
                         </div>
-                        <div className="bg-gray-100 rounded-xl p-3">
+                        <div className="bg-gray-50 rounded-xl p-3">
                           <div className="flex items-center gap-2 mb-1">
                             <MapPin className="w-3 h-3 text-gray-500" />
                             <span className="text-xs text-gray-500">Rank</span>
@@ -255,7 +255,7 @@ wing.id === 'police' ? '<path stroke-linecap="round" stroke-linejoin="round" str
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                           className="w-full py-3 rounded-xl text-white font-bold tracking-wider flex items-center justify-center gap-3 transition-all duration-300 group/btn"
-                          style={{ background: wing.gradient }}
+                          style={{ backgroundColor: wing.color }}
                         >
                           <span>Access Program</span>
                           <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
@@ -272,7 +272,7 @@ wing.id === 'police' ? '<path stroke-linecap="round" stroke-linejoin="round" str
                   {/* Hover Glow Effect */}
                   {isActive && (
                     <motion.div
-                      className="absolute inset-0 rounded-3xl pointer-events-none"
+                      className="absolute inset-0 rounded-xl pointer-events-none"
                       style={{
                         background: `radial-gradient(circle at center, ${wing.color}20 0%, transparent 70%)`
                       }}
