@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
 
 type DropdownKey = 'staff' | 'resources' | null;
 
 const Navbar: React.FC = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<DropdownKey>(null);
 
   const isGateway = location.pathname === '/';
+  // Check if we are currently on the Army Page
+  const isArmyPage = location.pathname.includes('/courses/army');
 
   /* ---------------------------------- */
   /* Home routing logic */
@@ -37,6 +40,26 @@ const Navbar: React.FC = () => {
     setIsMenuOpen(false);
     setActiveDropdown(null);
   }, [location.pathname]);
+
+  /* ---------------------------------- */
+  /* Directing Staff Scroll Handler */
+  /* ---------------------------------- */
+  const handleScrollToMentors = (e: React.MouseEvent) => {
+    e.preventDefault();
+    
+    if (isArmyPage) {
+      // If already on army page, just scroll
+      const element = document.getElementById('mentors');
+      if (element) {
+        const y = element.getBoundingClientRect().top + window.scrollY - 100; // Offset for navbar
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    } else {
+      // If elsewhere, go to army page first (usually this anchor link logic needs manual handling in React)
+      navigate('/courses/army');
+      // A small timeout to let the page load before scrolling could be added here if needed in a real app
+    }
+  };
 
   /* ---------------------------------- */
   /* Animations */
@@ -67,9 +90,17 @@ const Navbar: React.FC = () => {
   };
 
   /* ---------------------------------- */
-  /* Menu data */
+  /* Menu data (Dynamic) */
   /* ---------------------------------- */
-  const staffCourses = [
+  
+  // Conditionally switch the menu items based on the current page
+  const staffCourses = isArmyPage ? [
+    // Army Page Specific Menu
+    { name: 'Military History & Strategy', path: '#', icon: 'fa-book-reader' },
+    { name: 'Security & Current Affairs', path: '#', icon: 'fa-globe-asia' },
+    { name: 'Tactics & Staff Duties', path: '#', icon: 'fa-chess-knight' }
+  ] : [
+    // Default Gateway Menu
     { name: 'Nepal Army Staff Course', path: '/courses/army', icon: 'fa-shield-alt' },
     { name: 'Nepal Police Staff Course', path: '/courses/police', icon: 'fa-balance-scale' },
     { name: 'APF Staff Course', path: '/courses/apf', icon: 'fa-building-shield' }
@@ -106,7 +137,6 @@ const Navbar: React.FC = () => {
         aria-expanded={activeDropdown === id}
         className="group flex items-center gap-1 px-2 py-1 focus:outline-none"
       >
-        {/* FIXED: Changed text-gray-800 to text-white so it shows on dark background */}
         <span className="font-['Rajdhani'] font-semibold text-lg uppercase tracking-widest text-white group-hover:text-[#D4AF37] transition-colors">
           {label}
         </span>
@@ -146,13 +176,12 @@ const Navbar: React.FC = () => {
       }`}
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
-        {/* Identity - Matching Gateway Style */}
+        {/* Identity */}
         <Link
           to={homeLink}
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           className="flex items-center gap-4 group"
         >
-          {/* Academy Logo - Same as Gateway */}
           <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#D4AF37] to-[#F4CA30] flex items-center justify-center p-2 shadow-lg group-hover:scale-105 transition-transform">
             <img
               src="/images/academy-logo.png"
@@ -171,20 +200,23 @@ const Navbar: React.FC = () => {
           </div>
         </Link>
         
-        {/* Desktop Nav - Updated text colors for dark background */}
+        {/* Desktop Nav */}
         {!isGateway && (
           <div className="hidden md:flex items-center gap-8">
             <Dropdown
               id="staff"
-              label="Staff Courses"
+              label={isArmyPage ? "Army Courses" : "Staff Courses"} // Change Label based on page
               items={staffCourses}
-              width="w-64"
+              width={isArmyPage ? "w-72" : "w-64"}
             />
-            <Link className="nav-link" to="/faculty">
-              <span className="font-['Rajdhani'] font-semibold text-lg uppercase tracking-widest text-white hover:text-[#D4AF37] transition-colors">
-                Directing Staff
-              </span>
-            </Link>
+            {/* Updated Directing Staff Link */}
+            <a 
+              href="#mentors"
+              onClick={handleScrollToMentors}
+              className="font-['Rajdhani'] font-semibold text-lg uppercase tracking-widest text-white hover:text-[#D4AF37] transition-colors cursor-pointer"
+            >
+              Directing Staff
+            </a>
             <Dropdown
               id="resources"
               label="Academy Resources"
@@ -194,7 +226,7 @@ const Navbar: React.FC = () => {
           </div>
         )}
         
-        {/* Actions - Updated for dark background */}
+        {/* Actions */}
         <div className="flex items-center gap-4">
           <button className="hidden md:flex items-center gap-2 px-6 py-2 bg-[#D4AF37] text-[#0F1C15] uppercase font-bold tracking-wider text-sm hover:bg-[#C19A2E] transition-colors rounded-lg">
             <i className="fas fa-user-shield" />
@@ -211,7 +243,7 @@ const Navbar: React.FC = () => {
         </div>
       </div>
       
-      {/* Mobile Menu - Updated for dark background */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {isMenuOpen && !isGateway && (
           <motion.div
@@ -222,8 +254,14 @@ const Navbar: React.FC = () => {
             className="md:hidden bg-gradient-to-r from-[#0F1C15]/90 to-[#152028]/90 border-t border-[#D4AF37]/40"
           >
             <div className="flex flex-col p-6 gap-4 uppercase font-bold tracking-widest">
-              <Link to="/courses/army" className="text-white hover:text-[#D4AF37]">Staff Courses</Link>
-              <Link to="/faculty" className="text-white hover:text-[#D4AF37]">Directing Staff</Link>
+              {staffCourses.map(item => (
+                 <Link key={item.name} to={item.path} className="text-white hover:text-[#D4AF37] text-sm flex items-center gap-2">
+                   <i className={`fas ${item.icon}`} /> {item.name}
+                 </Link>
+              ))}
+              <a href="#mentors" onClick={(e) => { handleScrollToMentors(e); setIsMenuOpen(false); }} className="text-white hover:text-[#D4AF37] text-sm flex items-center gap-2">
+                <i className="fas fa-users" /> Directing Staff
+              </a>
               <button className="flex items-center gap-2 pt-4 border-t border-[#D4AF37]/40 text-white hover:text-[#D4AF37]">
                 <i className="fas fa-user-shield" /> HQ Login
               </button>
