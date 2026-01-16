@@ -1,12 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import {
-  Shield, Target, Award, Star, Clock, MapPin,
-  CheckCircle, ChevronRight, MousePointerClick, ArrowRight
+  Shield,
+  Target,
+  Award,
+  Star,
+  Clock,
+  MapPin,
+  CheckCircle,
+  ChevronRight,
+  MousePointerClick
 } from 'lucide-react';
 import type { SVGProps } from 'react';
-import { useAuth } from '../context/AuthContext';
 
 interface Wing {
   id: string;
@@ -28,7 +34,6 @@ interface Wing {
 
 const Gateway = () => {
   const navigate = useNavigate();
-  const { user } = useAuth(); // CONNECT TO BRAIN
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [activeWing, setActiveWing] = useState<string | null>(null);
 
@@ -42,7 +47,12 @@ const Gateway = () => {
       color: '#00693E',
       lightColor: '#E6F2ED',
       icon: Shield,
-      stats: { success: '98.2%', seats: '24', duration: '12 Months', rank: 'Colonel & Above' },
+      stats: { 
+        success: '98.2%', 
+        seats: '24', 
+        duration: '12 Months', 
+        rank: 'Colonel & Above' 
+      },
       path: '/courses/army'
     },
     {
@@ -54,7 +64,12 @@ const Gateway = () => {
       color: '#1E3A8A',
       lightColor: '#E8EDFF',
       icon: Target,
-      stats: { success: '95.7%', seats: '28', duration: '10 Months', rank: 'DSP & Above' },
+      stats: { 
+        success: '95.7%', 
+        seats: '28', 
+        duration: '10 Months', 
+        rank: 'DSP & Above' 
+      },
       path: '/courses/police'
     },
     {
@@ -66,7 +81,12 @@ const Gateway = () => {
       color: '#991B1B',
       lightColor: '#FEE2E2',
       icon: Award,
-      stats: { success: '96.5%', seats: '26', duration: '11 Months', rank: 'Commandant & Above' },
+      stats: { 
+        success: '96.5%', 
+        seats: '26', 
+        duration: '11 Months', 
+        rank: 'Commandant & Above' 
+      },
       path: '/courses/apf'
     }
   ];
@@ -88,38 +108,18 @@ const Gateway = () => {
             Exclusive preparation tracks for Nepal Army, Police & APF officers.
           </p>
 
-          {/* --- SMART BUTTON SECTION --- */}
-          {user ? (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="flex flex-col items-center gap-3"
-            >
-              <button 
-                onClick={() => navigate('/dashboard')}
-                className="group relative inline-flex items-center gap-3 px-8 py-4 bg-[#0F1C15] text-white rounded-full font-bold text-sm tracking-widest uppercase hover:bg-[#1a2e24] transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1"
-              >
-                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                Enter Officer Portal (Demo)
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </button>
-              <span className="text-xs font-medium text-gray-400">
-                Logged in as {user.displayName || 'Cadet'}
-              </span>
-            </motion.div>
-          ) : (
-            <motion.div 
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-white rounded-full shadow-sm border border-gray-200 text-sm font-medium text-gray-700 cursor-default"
-            >
-              <MousePointerClick className="w-4 h-4 text-[#D4AF37]" />
-              <span>
-                Select your command <span className="text-gray-300 mx-1">|</span> Secure your seat
-              </span>
-            </motion.div>
-          )}
+          {/* --- DESIGNED INSTRUCTION PILL --- */}
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-white rounded-full shadow-sm border border-gray-200 text-sm font-medium text-gray-700 hover:border-[#D4AF37]/50 hover:shadow-md transition-all cursor-default"
+          >
+            <MousePointerClick className="w-4 h-4 text-[#D4AF37]" />
+            <span>
+              Select your command <span className="text-gray-300 mx-1">|</span> Secure your seat to <span className="text-[#D4AF37] font-bold">Staff College</span>
+            </span>
+          </motion.div>
         </div>
       </div>
 
@@ -128,6 +128,7 @@ const Gateway = () => {
         <div className="grid md:grid-cols-3 gap-8">
           {wings.map((wing) => {
             const Icon = wing.icon;
+            
             return (
               <motion.div
                 key={wing.id}
@@ -139,62 +140,133 @@ const Gateway = () => {
                 className="cursor-pointer group"
               >
                 <div className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow h-full flex flex-col border border-gray-100">
+                  
+                  {/* TOP SECTION */}
                   <div className="p-8 pb-6">
                     <div className="flex justify-between items-start mb-6">
                       <div>
                         <div className="text-xs font-medium text-gray-500 mb-1">{wing.code}</div>
-                        <h3 className="text-2xl font-semibold text-gray-900">{wing.title}</h3>
+                        <h3 className="text-2xl font-semibold text-gray-900">
+                          {wing.title}
+                        </h3>
                       </div>
-                      <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: wing.lightColor }}>
-                        <Icon className="w-6 h-6" style={{ color: wing.color }} />
+                      <div 
+                        className="w-12 h-12 rounded-xl flex items-center justify-center"
+                        style={{ backgroundColor: wing.lightColor }}
+                      >
+                        <Icon 
+                          className="w-6 h-6" 
+                          style={{ color: wing.color }}
+                        />
                       </div>
                     </div>
-                    <p className="text-sm text-gray-600 mb-6">{wing.subtitle}</p>
+
+                    <p className="text-sm text-gray-600 mb-6">
+                      {wing.subtitle}
+                    </p>
+
+                    {/* ENROLLMENT STATUS */}
                     <div className="flex items-center justify-between mb-6">
                       <div className="flex items-center gap-2">
                         <CheckCircle className="w-4 h-4 text-green-500" />
                         <span className="text-sm font-medium text-green-600">Enrolling Now</span>
                       </div>
-                      <div className="text-sm text-gray-500">Seats: <span className="font-semibold text-gray-900">{wing.stats.seats}</span></div>
+                      <div className="text-sm text-gray-500">
+                        Seats: <span className="font-semibold text-gray-900">{wing.stats.seats}</span>
+                      </div>
                     </div>
                   </div>
-                  <div className="relative h-64 flex items-center justify-center p-4" style={{ backgroundColor: wing.lightColor }}>
-                    <div className="absolute inset-0 opacity-5" style={{ backgroundImage: `radial-gradient(${wing.color} 1px, transparent 1px)`, backgroundSize: '20px 20px' }} />
+
+                  {/* LOGO SECTION - FIXED SIZE */}
+                  <div 
+                    className="relative h-64 flex items-center justify-center p-4"
+                    style={{ backgroundColor: wing.lightColor }}
+                  >
+                    {/* Background pattern */}
+                    <div 
+                      className="absolute inset-0 opacity-5"
+                      style={{
+                        backgroundImage: `radial-gradient(${wing.color} 1px, transparent 1px)`,
+                        backgroundSize: '20px 20px'
+                      }}
+                    />
+                    
+                    {/* Logo container with consistent size */}
                     <div className="relative w-full h-full max-w-[200px] mx-auto flex items-center justify-center">
-                      <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }} className="relative w-full h-full flex items-center justify-center">
-                        <img src={wing.logo} alt={wing.title} className="w-auto h-auto max-h-full max-w-full object-contain" />
+                      <motion.div
+                        className="relative w-full h-full flex items-center justify-center"
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <img
+                          src={wing.logo}
+                          alt={wing.title}
+                          className="w-auto h-auto max-h-full max-w-full object-contain"
+                        />
                       </motion.div>
                     </div>
                   </div>
+
+                  {/* STATS SECTION */}
                   <div className="p-8 pt-6">
                     <div className="grid grid-cols-2 gap-4 mb-8">
                       <div className="space-y-1">
-                        <div className="flex items-center gap-2"><Star className="w-4 h-4 text-gray-400" /><span className="text-xs font-medium text-gray-500">Success Rate</span></div>
+                        <div className="flex items-center gap-2">
+                          <Star className="w-4 h-4 text-gray-400" />
+                          <span className="text-xs font-medium text-gray-500">Success Rate</span>
+                        </div>
                         <div className="text-lg font-bold text-gray-900">{wing.stats.success}</div>
                       </div>
+                      
                       <div className="space-y-1">
-                        <div className="flex items-center gap-2"><Clock className="w-4 h-4 text-gray-400" /><span className="text-xs font-medium text-gray-500">Duration</span></div>
+                        <div className="flex items-center gap-2">
+                          <Clock className="w-4 h-4 text-gray-400" />
+                          <span className="text-xs font-medium text-gray-500">Duration</span>
+                        </div>
                         <div className="text-lg font-bold text-gray-900">{wing.stats.duration}</div>
                       </div>
+                      
                       <div className="space-y-1">
-                        <div className="flex items-center gap-2"><MapPin className="w-4 h-4 text-gray-400" /><span className="text-xs font-medium text-gray-500">Rank</span></div>
+                        <div className="flex items-center gap-2">
+                          <MapPin className="w-4 h-4 text-gray-400" />
+                          <span className="text-xs font-medium text-gray-500">Rank</span>
+                        </div>
                         <div className="text-sm font-semibold text-gray-900">{wing.stats.rank}</div>
                       </div>
+                      
                       <div className="space-y-1">
                         <div className="text-xs font-medium text-gray-500">Next Intake</div>
                         <div className="text-sm font-semibold text-gray-900">Feb 1, 2024</div>
                       </div>
                     </div>
-                    <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="w-full py-3.5 px-4 rounded-xl font-medium text-white flex items-center justify-center gap-2 group-hover:shadow-md transition-all duration-300" style={{ backgroundColor: wing.color }}>
-                      View Program Details <ChevronRight className="w-4 h-4" />
+
+                    {/* CTA BUTTON */}
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="w-full py-3.5 px-4 rounded-xl font-medium text-white flex items-center justify-center gap-2 group-hover:shadow-md transition-all duration-300"
+                      style={{ backgroundColor: wing.color }}
+                    >
+                      View Program Details
+                      <ChevronRight className="w-4 h-4" />
                     </motion.button>
                   </div>
                 </div>
-                <div className="absolute inset-0 rounded-3xl border-2 border-transparent group-hover:border-opacity-30 transition-all duration-300 pointer-events-none" style={{ borderColor: wing.color, opacity: activeWing === wing.id ? 1 : 0 }} />
+
+                {/* COLOR ACCENT BORDER ON HOVER */}
+                <div 
+                  className="absolute inset-0 rounded-3xl border-2 border-transparent group-hover:border-opacity-30 transition-all duration-300 pointer-events-none"
+                  style={{
+                    borderColor: wing.color,
+                    opacity: activeWing === wing.id ? 1 : 0
+                  }}
+                />
               </motion.div>
             );
           })}
         </div>
+
+     
       </div>
     </div>
   );
