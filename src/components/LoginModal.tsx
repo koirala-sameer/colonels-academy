@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Mail, Lock, User, ArrowRight, Shield } from 'lucide-react';
+import { X, Mail,ArrowRight, Shield } from 'lucide-react';
+
+// IMPORT AUTH FUNCTIONS
+import { signInWithGoogle } from '../lib/firebase'; // Adjust path as needed
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -8,7 +11,26 @@ interface LoginModalProps {
 }
 
 const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
-  const [view, setView] = useState<'signin' | 'signup'>('signin');
+  const [view] = useState<'signin' | 'signup'>('signin');
+  const [isLoading, setIsLoading] = useState(false); // Add loading state
+
+  // SSO HANDLER
+  const handleSSO = async (provider: 'google' | 'apple' | 'facebook') => {
+    setIsLoading(true);
+    try {
+      if (provider === 'google') {
+        const user = await signInWithGoogle();
+        console.log("Logged in user:", user);
+        // TODO: Redirect user to dashboard or close modal
+        onClose(); 
+      }
+      // Add 'apple' and 'facebook' logic here similarly
+    } catch (error) {
+      alert("Login failed. Check console for details.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   if (!isOpen) return null;
 
@@ -43,37 +65,22 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
             <X className="w-5 h-5" />
           </button>
 
-          {/* -------------------------------------------------- */}
-          {/* LEFT PANEL: BRANDING                              */}
-          {/* -------------------------------------------------- */}
+          {/* LEFT PANEL (Unchanged) */}
           <div className="hidden md:flex md:w-5/12 bg-[#0F1C15] relative flex-col justify-between p-12 text-white">
-            
-            {/* Tactical Grid Pattern */}
             <div 
               className="absolute inset-0 opacity-10" 
-              style={{ 
-                backgroundImage: `linear-gradient(#D4AF37 1px, transparent 1px), linear-gradient(90deg, #D4AF37 1px, transparent 1px)`, 
-                backgroundSize: '40px 40px' 
-              }} 
+              style={{ backgroundImage: `linear-gradient(#D4AF37 1px, transparent 1px), linear-gradient(90deg, #D4AF37 1px, transparent 1px)`, backgroundSize: '40px 40px' }} 
             />
-
-            {/* Top: Branding */}
             <div className="relative z-10">
               <div className="flex items-center gap-4 mb-12">
                 <div className="w-12 h-12 bg-[#D4AF37] flex items-center justify-center rounded-sm shadow-lg shadow-black/20">
                   <Shield className="w-7 h-7 text-[#0F1C15]" strokeWidth={2.5} />
                 </div>
                 <div>
-                  <h3 className="font-['Rajdhani'] font-bold text-xl tracking-[0.2em] text-[#D4AF37] uppercase leading-none">
-                    The Colonel's
-                  </h3>
-                  <h3 className="font-['Rajdhani'] font-bold text-xl tracking-[0.2em] text-white uppercase leading-none mt-1">
-                    Academy
-                  </h3>
+                  <h3 className="font-['Rajdhani'] font-bold text-xl tracking-[0.2em] text-[#D4AF37] uppercase leading-none">The Colonel's</h3>
+                  <h3 className="font-['Rajdhani'] font-bold text-xl tracking-[0.2em] text-white uppercase leading-none mt-1">Academy</h3>
                 </div>
               </div>
-
-              {/* Dynamic Context Text */}
               <AnimatePresence mode="wait">
                 <motion.div
                   key={view}
@@ -83,20 +90,14 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                   transition={{ duration: 0.3 }}
                 >
                   <h1 className="text-4xl font-bold font-['Rajdhani'] uppercase leading-tight mb-6">
-                    {view === 'signin' 
-                      ? "Return to Base." 
-                      : "Begin Your Commission."}
+                    {view === 'signin' ? "Return to Base." : "Begin Your Commission."}
                   </h1>
                   <p className="text-gray-400 text-sm leading-relaxed max-w-xs border-l-2 border-[#D4AF37] pl-4">
-                    {view === 'signin' 
-                      ? "Access your dashboard, resume your course progress, and view latest staff duties."
-                      : "Join Nepal's elite officer preparation platform. Track your progress and compete with the best."}
+                    {view === 'signin' ? "Access your dashboard, resume your course progress, and view latest staff duties." : "Join Nepal's elite officer preparation platform. Track your progress and compete with the best."}
                   </p>
                 </motion.div>
               </AnimatePresence>
             </div>
-
-            {/* Bottom: Stat */}
             <div className="relative z-10">
               <div className="bg-[#15231D] p-4 border border-[#D4AF37]/30 max-w-[200px]">
                 <div className="text-xs text-[#D4AF37] uppercase tracking-widest font-bold mb-1">Active Officers</div>
@@ -105,38 +106,26 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
             </div>
           </div>
 
-          {/* -------------------------------------------------- */}
-          {/* RIGHT PANEL: FORM ACTION                          */}
-          {/* -------------------------------------------------- */}
+          {/* RIGHT PANEL: FORM ACTION */}
           <div className="w-full md:w-7/12 bg-[#f6f7f8] p-8 md:p-16 flex flex-col justify-center relative overflow-y-auto">
-            
             <div className="w-full max-w-md mx-auto">
               
-              {/* HEADER */}
               <div className="mb-8">
                 <h2 className="text-3xl font-bold text-[#0F1C15] mb-3">
                   {view === 'signin' ? 'HQ Access' : 'New Registration'}
                 </h2>
                 <p className="text-gray-500 text-sm">
-                  {view === 'signin' ? (
-                    <>
-                      Enter your credentials to access the portal. <br/>
-                      <span className="text-xs mt-1 block text-gray-400">Not an officer yet? <button onClick={() => setView('signup')} className="text-[#D4AF37] font-bold hover:underline">Apply for access here.</button></span>
-                    </>
-                  ) : (
-                    <>
-                      Fill in your details to create a cadet profile. <br/>
-                      <span className="text-xs mt-1 block text-gray-400">Already have a profile? <button onClick={() => setView('signin')} className="text-[#D4AF37] font-bold hover:underline">Log in here.</button></span>
-                    </>
-                  )}
+                  {view === 'signin' ? "Enter your credentials to access the portal." : "Fill in your details to create a cadet profile."}
                 </p>
               </div>
 
               {/* MODERN SSO GRID */}
               <div className="grid grid-cols-3 gap-3 mb-8">
-                {/* Google Button */}
+                {/* Google Button - WIRED UP */}
                 <button 
-                  className="flex items-center justify-center py-3.5 bg-white border border-gray-200 hover:border-[#D4AF37]/50 hover:shadow-md transition-all duration-200 rounded-xl group"
+                  onClick={() => handleSSO('google')}
+                  disabled={isLoading}
+                  className="flex items-center justify-center py-3.5 bg-white border border-gray-200 hover:border-[#D4AF37]/50 hover:shadow-md transition-all duration-200 rounded-xl group disabled:opacity-50"
                 >
                   <svg className="w-5 h-5" viewBox="0 0 24 24">
                     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -146,8 +135,9 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                   </svg>
                 </button>
 
-                {/* Apple Button */}
+                {/* Apple Button - Placeholder for now */}
                 <button 
+                  onClick={() => alert("Requires Apple Developer Account configuration")}
                   className="flex items-center justify-center py-3.5 bg-white border border-gray-200 hover:border-[#D4AF37]/50 hover:shadow-md transition-all duration-200 rounded-xl group"
                 >
                   <svg className="w-5 h-5 text-black" fill="currentColor" viewBox="0 0 24 24">
@@ -155,8 +145,9 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                   </svg>
                 </button>
 
-                {/* Facebook Button */}
+                {/* Facebook Button - Placeholder for now */}
                 <button 
+                  onClick={() => alert("Requires Meta Developer App configuration")}
                   className="flex items-center justify-center py-3.5 bg-white border border-gray-200 hover:border-[#D4AF37]/50 hover:shadow-md transition-all duration-200 rounded-xl group"
                 >
                   <svg className="w-5 h-5 text-[#1877F2]" fill="currentColor" viewBox="0 0 24 24">
@@ -165,93 +156,36 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                 </button>
               </div>
 
-              {/* DIVIDER */}
+              {/* ... Rest of your form (inputs, divider, etc) ... */}
+              {/* Be sure to keep the form we refined in the previous step here */}
               <div className="relative mb-8">
                 <div className="absolute inset-0 flex items-center">
                   <div className="w-full border-t border-gray-200"></div>
                 </div>
                 <div className="relative flex justify-center text-[10px] uppercase font-bold tracking-widest">
-                  <span className="bg-[#f6f7f8] px-4 text-gray-400">
-                    Or via Email
-                  </span>
+                  <span className="bg-[#f6f7f8] px-4 text-gray-400">Or via Email</span>
                 </div>
               </div>
 
-              {/* FORM FIELDS */}
               <form className="space-y-5">
-                {view === 'signup' && (
-                  <motion.div 
-                    initial={{ opacity: 0, height: 0 }} 
-                    animate={{ opacity: 1, height: 'auto' }}
-                    className="space-y-5"
-                  >
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">Rank & Full Name</label>
-                      <div className="relative">
-                        <User className="absolute top-3.5 left-4 w-5 h-5 text-gray-400" />
-                        <input 
-                          type="text" 
-                          className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50 focus:border-[#D4AF37] transition-all rounded-lg shadow-sm"
-                          placeholder="e.g. Cpt. John Doe"
-                        />
-                      </div>
+                 {/* ... Input fields from previous response ... */}
+                 <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">Email Address</label>
+                    <div className="relative">
+                      <Mail className="absolute top-3.5 left-4 w-5 h-5 text-gray-400" />
+                      <input type="email" className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50 focus:border-[#D4AF37] transition-all rounded-lg shadow-sm" placeholder="name@example.com" />
                     </div>
-                  </motion.div>
-                )}
+                 </div>
 
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">Email Address</label>
-                  <div className="relative">
-                    <Mail className="absolute top-3.5 left-4 w-5 h-5 text-gray-400" />
-                    <input 
-                      type="email" 
-                      className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50 focus:border-[#D4AF37] transition-all rounded-lg shadow-sm"
-                      placeholder="name@example.com"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-center mb-2">
-                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-700">Password</label>
-                    {view === 'signin' && (
-                      <a href="#" className="text-xs text-gray-400 hover:text-[#0F1C15] transition-colors">Forgot Password?</a>
-                    )}
-                  </div>
-                  <div className="relative">
-                    <Lock className="absolute top-3.5 left-4 w-5 h-5 text-gray-400" />
-                    <input 
-                      type="password" 
-                      className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50 focus:border-[#D4AF37] transition-all rounded-lg shadow-sm"
-                      placeholder="••••••••"
-                    />
-                  </div>
-                </div>
-
-                {/* GRADIENT ACTION BUTTON */}
-                <button
+                 <button
                   type="button"
                   className="w-full py-4 mt-6 bg-gradient-to-r from-[#D4AF37] to-[#F4CA30] text-[#0F1C15] hover:shadow-lg hover:shadow-[#D4AF37]/30 hover:-translate-y-0.5 transition-all duration-300 font-bold uppercase tracking-wider text-sm flex items-center justify-center gap-2 group rounded-xl shadow-md"
                 >
                   {view === 'signin' ? 'Secure Login' : 'Create Account'}
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </button>
-
-                {/* Mobile View Toggle */}
-                <div className="md:hidden text-center mt-6 pt-6 border-t border-gray-200">
-                  <p className="text-sm text-gray-500">
-                    {view === 'signin' ? "First time?" : "Returning user?"}
-                    <button 
-                      type="button"
-                      onClick={() => setView(view === 'signin' ? 'signup' : 'signin')}
-                      className="ml-2 font-bold text-[#0F1C15]"
-                    >
-                      {view === 'signin' ? 'Sign Up' : 'Sign In'}
-                    </button>
-                  </p>
-                </div>
-
               </form>
+
             </div>
           </div>
 
