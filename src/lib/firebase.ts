@@ -1,4 +1,3 @@
-// src/lib/firebase.ts
 import { initializeApp } from "firebase/app";
 import { 
   getAuth, 
@@ -6,15 +5,7 @@ import {
   signInWithPopup 
 } from "firebase/auth";
 
-// --- PASTE YOUR CONFIG HERE ---
-
-// Import the functions you need from the SDKs you need
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-
+// --- PASTE YOUR REAL CONFIG HERE ---
 const firebaseConfig = {
   apiKey: "AIzaSyDrPheaIe6zXYP29Vr6uH0MV1CTXTxw61Y",
   authDomain: "the-colonels-academy.firebaseapp.com",
@@ -24,7 +15,6 @@ const firebaseConfig = {
   appId: "1:565033986717:web:25ae9de25f7ef047a90274",
   measurementId: "G-LGVWZLQ741"
 };
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
@@ -44,3 +34,7 @@ export const signInWithGoogle = async () => {
     throw error;
   }
 };
+
+
+
+

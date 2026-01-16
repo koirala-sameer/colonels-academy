@@ -9,6 +9,7 @@ import Gateway from './pages/Gateway';
 import ArmyPage from './pages/ArmyPage';
 import PolicePage from './pages/PolicePage';
 import APFPage from './pages/APFPage';
+import DashboardHome from './pages/DashboardHome'; // <--- IMPORT THIS
 
 function App() {
   const location = useLocation();
@@ -28,6 +29,9 @@ function App() {
         <Route path="/courses/army" element={<ArmyPage />} />
         <Route path="/courses/police" element={<PolicePage />} />
         <Route path="/courses/apf" element={<APFPage />} />
+        
+        {/* ADD THIS NEW ROUTE */}
+        <Route path="/dashboard" element={<DashboardHome />} />
       </Routes>
 
     </div>
