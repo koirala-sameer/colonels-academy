@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
+import LoginModal from './LoginModal';
 
 type DropdownKey = 'staff' | 'resources' | null;
 
@@ -10,10 +11,12 @@ const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<DropdownKey>(null);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
 
   const isGateway = location.pathname === '/';
-  // Check if we are currently on the Army Page
   const isArmyPage = location.pathname.includes('/courses/army');
+  const isAPFPage = location.pathname.includes('/courses/apf');
+  const isPolicePage = location.pathname.includes('/courses/police');
 
   /* ---------------------------------- */
   /* Home routing logic */
@@ -47,17 +50,26 @@ const Navbar: React.FC = () => {
   const handleScrollToMentors = (e: React.MouseEvent) => {
     e.preventDefault();
     
-    if (isArmyPage) {
-      // If already on army page, just scroll
+    let targetPage = '/';
+    if (isArmyPage) targetPage = '/courses/army';
+    if (isAPFPage) targetPage = '/courses/apf';
+    if (isPolicePage) targetPage = '/courses/police';
+
+    if (location.pathname === targetPage) {
       const element = document.getElementById('mentors');
       if (element) {
-        const y = element.getBoundingClientRect().top + window.scrollY - 100; // Offset for navbar
+        const y = element.getBoundingClientRect().top + window.scrollY - 100;
         window.scrollTo({ top: y, behavior: 'smooth' });
       }
     } else {
-      // If elsewhere, go to army page first (usually this anchor link logic needs manual handling in React)
-      navigate('/courses/army');
-      // A small timeout to let the page load before scrolling could be added here if needed in a real app
+      navigate(targetPage);
+      setTimeout(() => {
+        const element = document.getElementById('mentors');
+        if (element) {
+          const y = element.getBoundingClientRect().top + window.scrollY - 100;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      }, 500);
     }
   };
 
@@ -92,19 +104,33 @@ const Navbar: React.FC = () => {
   /* ---------------------------------- */
   /* Menu data (Dynamic) */
   /* ---------------------------------- */
-  
-  // Conditionally switch the menu items based on the current page
-  const staffCourses = isArmyPage ? [
-    // Army Page Specific Menu
-    { name: 'Military History & Strategy', path: '#', icon: 'fa-book-reader' },
-    { name: 'Security & Current Affairs', path: '#', icon: 'fa-globe-asia' },
-    { name: 'Tactics & Staff Duties', path: '#', icon: 'fa-chess-knight' }
-  ] : [
-    // Default Gateway Menu
-    { name: 'Nepal Army Staff Course', path: '/courses/army', icon: 'fa-shield-alt' },
-    { name: 'Nepal Police Staff Course', path: '/courses/police', icon: 'fa-balance-scale' },
-    { name: 'APF Staff Course', path: '/courses/apf', icon: 'fa-building-shield' }
-  ];
+  const staffCourses = (() => {
+    if (isArmyPage) {
+      return [
+        { name: 'Military History & Strategy', path: '#', icon: 'fa-book-reader' },
+        { name: 'Security & Current Affairs', path: '#', icon: 'fa-globe-asia' },
+        { name: 'Tactics & Staff Duties', path: '#', icon: 'fa-chess-knight' }
+      ];
+    } else if (isAPFPage) {
+      return [
+        { name: 'APF Command & Leadership', path: '#', icon: 'fa-shield-alt' },
+        { name: 'Internal Security Operations', path: '#', icon: 'fa-siren' },
+        { name: 'APF Exam Preparation', path: '#', icon: 'fa-bullseye' }
+      ];
+    } else if (isPolicePage) {
+      return [
+        { name: 'Police Administration', path: '#', icon: 'fa-balance-scale' },
+        { name: 'Criminal Law & Procedure', path: '#', icon: 'fa-gavel' },
+        { name: 'Investigation Techniques', path: '#', icon: 'fa-search' }
+      ];
+    } else {
+      return [
+        { name: 'Nepal Army Staff Course', path: '/courses/army', icon: 'fa-shield-alt' },
+        { name: 'Nepal Police Staff Course', path: '/courses/police', icon: 'fa-balance-scale' },
+        { name: 'APF Staff Course', path: '/courses/apf', icon: 'fa-building-shield' }
+      ];
+    }
+  })();
 
   const academyResources = [
     { name: 'Download Center', path: '/resources/downloads', icon: 'fa-file-download' },
@@ -116,17 +142,7 @@ const Navbar: React.FC = () => {
   /* ---------------------------------- */
   /* Reusable dropdown renderer */
   /* ---------------------------------- */
-  const Dropdown = ({
-    label,
-    items,
-    width,
-    id
-  }: {
-    label: string;
-    items: typeof staffCourses;
-    width: string;
-    id: DropdownKey;
-  }) => (
+  const Dropdown = ({ label, items, width, id }: { label: string; items: typeof staffCourses; width: string; id: DropdownKey; }) => (
     <div
       className="relative flex items-center"
       onMouseEnter={() => setActiveDropdown(id)}
@@ -170,106 +186,132 @@ const Navbar: React.FC = () => {
   /* Render */
   /* ---------------------------------- */
   return (
-    <nav
-      className={`sticky top-0 z-50 bg-gradient-to-r from-[#0F1C15]/90 to-[#152028]/90 backdrop-blur-xl border-b border-[#D4AF37]/40 shadow-2xl transition-all ${
-        isScrolled ? 'py-2' : 'py-3'
-      }`}
-    >
-      <div className="container mx-auto px-6 flex justify-between items-center">
-        {/* Identity */}
-        <Link
-          to={homeLink}
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="flex items-center gap-4 group"
-        >
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#D4AF37] to-[#F4CA30] flex items-center justify-center p-2 shadow-lg group-hover:scale-105 transition-transform">
-            <img
-              src="/images/academy-logo.png"
-              alt="The Colonel's Academy Logo"
-              className="w-full h-full object-contain"
-              onError={handleNavbarLogoError}
-            />
-          </div>
-          <div className="text-left">
-            <div className="font-['Rajdhani'] font-bold text-white text-lg uppercase tracking-wider">
-              The Colonel's Academy
-            </div>
-            <div className="font-mono text-xs text-[#D4AF37] uppercase tracking-wider mt-1">
-              Staff College Wing
-            </div>
-          </div>
-        </Link>
-        
-        {/* Desktop Nav */}
-        {!isGateway && (
-          <div className="hidden md:flex items-center gap-8">
-            <Dropdown
-              id="staff"
-              label={isArmyPage ? "Army Courses" : "Staff Courses"} // Change Label based on page
-              items={staffCourses}
-              width={isArmyPage ? "w-72" : "w-64"}
-            />
-            {/* Updated Directing Staff Link */}
-            <a 
-              href="#mentors"
-              onClick={handleScrollToMentors}
-              className="font-['Rajdhani'] font-semibold text-lg uppercase tracking-widest text-white hover:text-[#D4AF37] transition-colors cursor-pointer"
-            >
-              Directing Staff
-            </a>
-            <Dropdown
-              id="resources"
-              label="Academy Resources"
-              items={academyResources}
-              width="w-72"
-            />
-          </div>
-        )}
-        
-        {/* Actions */}
-        <div className="flex items-center gap-4">
-          <button className="hidden md:flex items-center gap-2 px-6 py-2 bg-[#D4AF37] text-[#0F1C15] uppercase font-bold tracking-wider text-sm hover:bg-[#C19A2E] transition-colors rounded-lg">
-            <i className="fas fa-user-shield" />
-            HQ Login
-          </button>
-          {!isGateway && (
-            <button
-              className="md:hidden text-2xl text-white hover:text-[#D4AF37]"
-              onClick={() => setIsMenuOpen(v => !v)}
-            >
-              <i className={`fas ${isMenuOpen ? 'fa-times' : 'fa-bars'}`} />
-            </button>
-          )}
-        </div>
-      </div>
-      
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMenuOpen && !isGateway && (
-          <motion.div
-            variants={menuVariants}
-            initial="closed"
-            animate="open"
-            exit="closed"
-            className="md:hidden bg-gradient-to-r from-[#0F1C15]/90 to-[#152028]/90 border-t border-[#D4AF37]/40"
+    <>
+      <nav
+        className={`sticky top-0 z-50 bg-gradient-to-r from-[#0F1C15]/90 to-[#152028]/90 backdrop-blur-xl border-b border-[#D4AF37]/40 shadow-2xl transition-all ${
+          isScrolled ? 'py-2' : 'py-3'
+        }`}
+      >
+        <div className="container mx-auto px-6 flex justify-between items-center">
+          {/* Identity */}
+          <Link
+            to={homeLink}
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="flex items-center gap-4 group"
           >
-            <div className="flex flex-col p-6 gap-4 uppercase font-bold tracking-widest">
-              {staffCourses.map(item => (
-                 <Link key={item.name} to={item.path} className="text-white hover:text-[#D4AF37] text-sm flex items-center gap-2">
-                   <i className={`fas ${item.icon}`} /> {item.name}
-                 </Link>
-              ))}
-              <a href="#mentors" onClick={(e) => { handleScrollToMentors(e); setIsMenuOpen(false); }} className="text-white hover:text-[#D4AF37] text-sm flex items-center gap-2">
-                <i className="fas fa-users" /> Directing Staff
-              </a>
-              <button className="flex items-center gap-2 pt-4 border-t border-[#D4AF37]/40 text-white hover:text-[#D4AF37]">
-                <i className="fas fa-user-shield" /> HQ Login
-              </button>
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#D4AF37] to-[#F4CA30] flex items-center justify-center p-2 shadow-lg group-hover:scale-105 transition-transform">
+              <img
+                src="/images/academy-logo.png"
+                alt="The Colonel's Academy Logo"
+                className="w-full h-full object-contain"
+                onError={handleNavbarLogoError}
+              />
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </nav>
+            <div className="text-left">
+              <div className="font-['Rajdhani'] font-bold text-white text-lg uppercase tracking-wider">
+                The Colonel's Academy
+              </div>
+              <div className="font-mono text-xs text-[#D4AF37] uppercase tracking-wider mt-1">
+                Staff College Wing
+              </div>
+            </div>
+          </Link>
+          
+          {/* Desktop Nav */}
+          {!isGateway && (
+            <div className="hidden md:flex items-center gap-8">
+              <Dropdown
+                id="staff"
+                label={(() => {
+                  if (isArmyPage) return "Army Courses";
+                  if (isAPFPage) return "APF Courses";
+                  if (isPolicePage) return "Police Courses";
+                  return "Staff Courses";
+                })()}
+                items={staffCourses}
+                width="w-72"
+              />
+              <a 
+                href="#mentors"
+                onClick={handleScrollToMentors}
+                className="font-['Rajdhani'] font-semibold text-lg uppercase tracking-widest text-white hover:text-[#D4AF37] transition-colors cursor-pointer"
+              >
+                Directing Staff
+              </a>
+              <Dropdown
+                id="resources"
+                label="Academy Resources"
+                items={academyResources}
+                width="w-72"
+              />
+            </div>
+          )}
+          
+          {/* Actions */}
+          <div className="flex items-center gap-4">
+            <button 
+              onClick={() => setIsLoginOpen(true)}
+              className="hidden md:flex items-center gap-2 px-6 py-2 bg-[#D4AF37] text-[#0F1C15] uppercase font-bold tracking-wider text-sm hover:bg-[#C19A2E] transition-colors rounded-lg"
+            >
+              <i className="fas fa-user-shield" />
+              HQ Login
+            </button>
+
+            {!isGateway && (
+              <button
+                className="md:hidden text-2xl text-white hover:text-[#D4AF37]"
+                onClick={() => setIsMenuOpen(v => !v)}
+              >
+                <i className={`fas ${isMenuOpen ? 'fa-times' : 'fa-bars'}`} />
+              </button>
+            )}
+          </div>
+        </div>
+        
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {isMenuOpen && !isGateway && (
+            <motion.div
+              variants={menuVariants}
+              initial="closed"
+              animate="open"
+              exit="closed"
+              className="md:hidden bg-gradient-to-r from-[#0F1C15]/90 to-[#152028]/90 border-t border-[#D4AF37]/40"
+            >
+              <div className="flex flex-col p-6 gap-4 uppercase font-bold tracking-widest">
+                {staffCourses.map(item => (
+                   <Link 
+                     key={item.name} 
+                     to={item.path} 
+                     className="text-white hover:text-[#D4AF37] text-sm flex items-center gap-2"
+                     onClick={() => setIsMenuOpen(false)}
+                   >
+                     <i className={`fas ${item.icon}`} /> {item.name}
+                   </Link>
+                ))}
+                <a 
+                  href="#mentors" 
+                  onClick={(e) => { handleScrollToMentors(e); setIsMenuOpen(false); }} 
+                  className="text-white hover:text-[#D4AF37] text-sm flex items-center gap-2"
+                >
+                  <i className="fas fa-users" /> Directing Staff
+                </a>
+                
+                <button 
+                  onClick={() => { setIsLoginOpen(true); setIsMenuOpen(false); }}
+                  className="flex items-center gap-2 pt-4 border-t border-[#D4AF37]/40 text-white hover:text-[#D4AF37]"
+                >
+                  <i className="fas fa-user-shield" /> HQ Login
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </nav>
+
+      {/* Login Modal */}
+      <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
+    </>
   );
 };
 
