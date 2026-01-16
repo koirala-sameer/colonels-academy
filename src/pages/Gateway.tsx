@@ -6,10 +6,7 @@ import {
   CheckCircle, ChevronRight, MousePointerClick, ArrowRight
 } from 'lucide-react';
 import type { SVGProps } from 'react';
-
-// FIREBASE IMPORTS
-import { auth } from '../lib/firebase';
-import { onAuthStateChanged } from 'firebase/auth';
+import { useAuth } from '../context/AuthContext';
 
 interface Wing {
   id: string;
@@ -31,18 +28,9 @@ interface Wing {
 
 const Gateway = () => {
   const navigate = useNavigate();
+  const { user } = useAuth(); // CONNECT TO BRAIN
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [activeWing, setActiveWing] = useState<string | null>(null);
-  
-  // NEW: Auth State
-  const [user, setUser] = useState<any>(null);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
-    return () => unsubscribe();
-  }, []);
 
   const wings: Wing[] = [
     {
@@ -100,9 +88,8 @@ const Gateway = () => {
             Exclusive preparation tracks for Nepal Army, Police & APF officers.
           </p>
 
-          {/* --- SMART HERO SECTION --- */}
+          {/* --- SMART BUTTON SECTION --- */}
           {user ? (
-            /* IF LOGGED IN: Show Demo Button */
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -121,7 +108,6 @@ const Gateway = () => {
               </span>
             </motion.div>
           ) : (
-            /* IF LOGGED OUT: Show Original Instruction Pill */
             <motion.div 
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -153,7 +139,6 @@ const Gateway = () => {
                 className="cursor-pointer group"
               >
                 <div className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow h-full flex flex-col border border-gray-100">
-                  {/* ... CARD CONTENT (Same as your existing code) ... */}
                   <div className="p-8 pb-6">
                     <div className="flex justify-between items-start mb-6">
                       <div>
@@ -183,7 +168,6 @@ const Gateway = () => {
                   </div>
                   <div className="p-8 pt-6">
                     <div className="grid grid-cols-2 gap-4 mb-8">
-                      {/* ... Stats Grid ... */}
                       <div className="space-y-1">
                         <div className="flex items-center gap-2"><Star className="w-4 h-4 text-gray-400" /><span className="text-xs font-medium text-gray-500">Success Rate</span></div>
                         <div className="text-lg font-bold text-gray-900">{wing.stats.success}</div>
