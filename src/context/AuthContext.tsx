@@ -7,7 +7,7 @@ interface UserProfile {
   displayName: string | null;
   email: string | null;
   photoURL: string | null;
-  tier: 'free' | 'paid'; // This tracks if they bought a course
+  tier: 'free' | 'paid';
 }
 
 interface AuthContextType {
@@ -24,7 +24,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // 1. FIREBASE LISTENER (For Google/Real Users)
+    // 1. FIREBASE (Google -> Paid Officer)
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       if (firebaseUser) {
         setUser({
@@ -32,10 +32,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           displayName: firebaseUser.displayName || 'Officer',
           email: firebaseUser.email,
           photoURL: firebaseUser.photoURL,
-          tier: 'paid' // Google users defaults to Paid for this demo
+          tier: 'paid' 
         });
+        localStorage.setItem('userTier', 'paid');
       } else {
-        // 2. CHECK LOCAL STORAGE (For Mock Users)
+        // 2. CHECK LOCAL STORAGE (Mock Login)
         const mockUser = localStorage.getItem('mockUser');
         if (mockUser) {
           setUser(JSON.parse(mockUser));
@@ -48,23 +49,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return () => unsubscribe();
   }, []);
 
-  // Function to manually log in a mock user
   const loginMock = (email: string, tier: 'free' | 'paid') => {
     const mockProfile: UserProfile = {
       uid: 'mock-user-id',
-      displayName: tier === 'paid' ? 'Officer' : 'Cadet',
+      displayName: tier === 'paid' ? 'Officer' : 'Cadet User',
       email: email,
       photoURL: null,
       tier: tier
     };
     setUser(mockProfile);
     localStorage.setItem('mockUser', JSON.stringify(mockProfile));
+    localStorage.setItem('userTier', tier);
   };
 
-  // Logout function
   const logout = async () => {
     await firebaseSignOut(auth);
     localStorage.removeItem('mockUser');
+    localStorage.removeItem('userTier');
     setUser(null);
     window.location.href = '/'; 
   };

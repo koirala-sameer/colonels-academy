@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Mail, Lock, User, ArrowRight, Shield, Globe, KeyRound } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext'; // <--- Import Brain
+import { useAuth } from '../context/AuthContext';
 import { signInWithGoogle } from '../lib/firebase';
 
 interface LoginModalProps {
@@ -12,7 +12,7 @@ interface LoginModalProps {
 
 const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
-  const { loginMock } = useAuth(); // <--- Get function
+  const { loginMock } = useAuth(); 
   const [view, setView] = useState<'signin' | 'signup'>('signin');
   const [isLoading, setIsLoading] = useState(false);
   
@@ -20,12 +20,12 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // 1. HANDLE GOOGLE
+  // 1. HANDLE GOOGLE (PAID USER)
   const handleGoogleLogin = async () => {
     setIsLoading(true);
     try {
       await signInWithGoogle();
-      // Context updates automatically via firebase listener
+      // Context listener handles the rest
       console.log("Logged in as PAID Officer via Google");
       onClose();
       navigate('/dashboard'); 
@@ -36,13 +36,17 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
     }
   };
 
-  // 2. HANDLE EMAIL
+  // 2. HANDLE EMAIL (FREE USER)
   const handleEmailLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
-    if (email === 'cadet@nepalarmy.mil.np' && password === 'password') {
-      loginMock(email); // <--- Notify Brain
+    // FIXED: Updated credentials to 'officer@tca.com'
+    if (email === 'officer@tca.com' && password === 'welcome') {
+      
+      // FIXED: Passed 'free' as the second argument to fix the TS Error
+      loginMock(email, 'free'); 
+      
       console.log("Logged in as FREE Cadet via Email");
       onClose(); 
       navigate('/dashboard'); 
@@ -52,10 +56,10 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
     setIsLoading(false);
   };
 
-  // HELPER
+  // HELPER: Updated for new credentials
   const fillDemoCredentials = () => {
-    setEmail('cadet@nepalarmy.mil.np');
-    setPassword('password');
+    setEmail('officer@tca.com');
+    setPassword('welcome');
   };
 
   if (!isOpen) return null;
@@ -104,7 +108,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                 </div>
               </div>
               <h1 className="text-4xl font-bold font-['Rajdhani'] uppercase leading-tight mb-6">
-                {view === 'signin' ? "Return to Base." : "Begin Your Commission."}
+                {view === 'signin' ? "Welcome Back" : "Join the Ranks"}
               </h1>
               <p className="text-gray-400 text-sm leading-relaxed max-w-xs border-l-2 border-[#D4AF37] pl-4">
                 Access your command dashboard. Paid officers use Google SSO. Cadets use email.
