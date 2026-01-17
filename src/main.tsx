@@ -8,7 +8,7 @@ import "./globals.css";
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
-      <AuthProvider> {/* <--- Wrap App */}
+      <AuthProvider> {/* <--- Wrap */}
         <App />
       </AuthProvider>
     </BrowserRouter>
