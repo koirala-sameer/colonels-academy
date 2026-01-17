@@ -3,18 +3,18 @@ import { useEffect } from 'react';
 
 // Components
 import Navbar from './components/Navbar';
+import ProtectedRoute from './components/ProtectedRoute'; // <--- IMPORT
 
 // Pages
 import Gateway from './pages/Gateway';
 import ArmyPage from './pages/ArmyPage';
 import PolicePage from './pages/PolicePage';
 import APFPage from './pages/APFPage';
-import DashboardHome from './pages/DashboardHome'; // <--- IMPORT THIS
+import DashboardHome from './pages/DashboardHome';
 
 function App() {
   const location = useLocation();
   
-  // Scroll to top whenever route changes
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location]);
@@ -25,13 +25,21 @@ function App() {
       <Navbar />
       
       <Routes>
+        {/* PUBLIC ROUTES */}
         <Route path="/" element={<Gateway />} />
         <Route path="/courses/army" element={<ArmyPage />} />
         <Route path="/courses/police" element={<PolicePage />} />
         <Route path="/courses/apf" element={<APFPage />} />
-        
-        {/* ADD THIS NEW ROUTE */}
-        <Route path="/dashboard" element={<DashboardHome />} />
+
+        {/* PROTECTED ROUTE (The Fix) */}
+        <Route 
+          path="/dashboard" 
+          element={
+            <ProtectedRoute requirePaid={true}>
+              <DashboardHome />
+            </ProtectedRoute>
+          } 
+        />
       </Routes>
 
     </div>
