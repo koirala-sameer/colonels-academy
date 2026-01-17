@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Mail, Lock, User, ArrowRight, Shield, Globe, KeyRound } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-
-// IMPORT AUTH FUNCTIONS
+import { useAuth } from '../context/AuthContext'; // <--- Import Brain
 import { signInWithGoogle } from '../lib/firebase';
 
 interface LoginModalProps {
@@ -13,7 +12,7 @@ interface LoginModalProps {
 
 const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
-  // FIXED: 'setView' is now used in the footer button below
+  const { loginMock } = useAuth(); // <--- Get function
   const [view, setView] = useState<'signin' | 'signup'>('signin');
   const [isLoading, setIsLoading] = useState(false);
   
@@ -26,7 +25,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
     setIsLoading(true);
     try {
       await signInWithGoogle();
-      localStorage.setItem('userTier', 'paid');
+      // Context updates automatically via firebase listener
       console.log("Logged in as PAID Officer via Google");
       onClose();
       navigate('/dashboard'); 
@@ -43,7 +42,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
     setIsLoading(true);
 
     if (email === 'cadet@nepalarmy.mil.np' && password === 'password') {
-      localStorage.setItem('userTier', 'free');
+      loginMock(email); // <--- Notify Brain
       console.log("Logged in as FREE Cadet via Email");
       onClose(); 
       navigate('/dashboard'); 
@@ -206,7 +205,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </button>
 
-                {/* Mobile View Toggle - THIS USES setView */}
+                {/* Mobile View Toggle */}
                 <div className="text-center mt-6 pt-6 border-t border-gray-200">
                   <p className="text-sm text-gray-500">
                     {view === 'signin' ? "First time?" : "Returning user?"}
